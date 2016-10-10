@@ -1,18 +1,15 @@
 angular.module('app.controllers')
 
 .controller('BroadcastCtrl', function($scope, $db) {
-	$scope.casting = true
+	$scope.casting = false
 	
 	$scope.mainFolder = ''
-	
-	$scope.toggleCasting = function() {
-		$scope.casting = !$scope.casting
-	}
 	
 	var ipcRenderer = require('electron').ipcRenderer
 
 	ipcRenderer.send('request-io-update')
 	ipcRenderer.send('get-folders')
+	ipcRenderer.send('get-status')
 
 	ipcRenderer.on('user-connection', function(event, data) {
 		$scope.userCount = data.count
@@ -25,6 +22,29 @@ angular.module('app.controllers')
 		$scope.folders = folders.reverse()
 		$scope.$apply()
 	})
+	
+	ipcRenderer.on('turned-on', function() {
+		$scope.casting = true
+		$scope.$apply()
+	})
+	
+	ipcRenderer.on('turned-off', function() {
+		$scope.casting = false
+		$scope.$apply()
+	})
+	
+	ipcRenderer.on('listening-status', function(event, listening) {
+		$scope.casting = listening
+		$scope.$apply()
+	})
+	
+	$scope.toggleCasting = function() {
+		if($scope.casting) {
+			ipcRenderer.send('turn-off')
+		} else {
+			ipcRenderer.send('turn-on')
+		}
+	}
 
 	$scope.openDialog = function() {
 		ipcRenderer.send('open-file-dialog')

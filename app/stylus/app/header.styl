@@ -1,7 +1,7 @@
 header
 	color color-header-text
 	background color-header-bg
-	padding 0 0.35em 0 5em
+	padding 0 0 0 5em
 	min-height 40px
 	max-height 40px
 	height 40px
@@ -13,3 +13,30 @@ header
 		margin 0
 		font-size 0.9em
 		pointer-events none
+
+	nav
+		
+		ul
+			list-style none
+			margin 0
+			padding 0
+			
+			a
+				display inline-block
+				color inherit
+				text-decoration none
+				box-shadow -1px 0 0 rgba(255, 255, 255, 0.5)
+				padding 0.5em
+				
+				&:hover
+					color inherit
+					text-decoration none
+					background rgba(255, 255, 255, 0.2)
+				
+				&.current
+					background #fff
+					color #000
+				
+				span
+					font-size 0.8em
+					font-weight bold

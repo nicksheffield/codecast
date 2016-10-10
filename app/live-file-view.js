@@ -227,8 +227,9 @@ io.on('connection', function(socket) {
 // ------------------------------------------------------------
 //   Start the Server
 // ------------------------------------------------------------
-http.listen(3000)
-fileServer.listen(3333)
+
+var httpListening = false
+var fileServerListening = false
 
 
 // ------------------------------------------------------------
@@ -238,5 +239,29 @@ fileServer.listen(3333)
 module.exports = {
 	io: io,
 	server: http,
-	setFolder: setFolder
+	express: exapp,
+	setFolder: setFolder,
+	mainFolder: function() {
+		return mainFolder
+	},
+	on: function() {
+		console.log('turned on')
+		http.listen(3000, function() {
+			httpListening = true
+		})
+		fileServer.listen(3333, function() {
+			fileServerListening = true
+		})
+	},
+	off: function() {
+		console.log('turned off')
+		http.close()
+		fileServer.close()
+		
+		httpListening = false
+		fileServerListening = false
+	},
+	listening: function() {
+		return httpListening
+	}
 }

@@ -25,10 +25,13 @@ var mainWindow
 // ------------------------------------------------------------
 var dataDir = app.getPath('appData') + '/codecast'
 if(!fs.existsSync(dataDir)) mkdirp(dataDir)
-var db = low(dataDir + '/db.json')
+var db = low(app.getPath('appData') + '/codecast/db.json')
+
+var homeDir = app.getPath('home').split('/')
+var username = homeDir[homeDir.length-1]
 
 db.defaults({
-	username: '',
+	username: username,
 	folders: []
 }).value()
 
@@ -91,8 +94,37 @@ mainApp.io.on('connection', function(socket) {
 
 
 // ------------------------------------------------------------
+//   Meta route
+// ------------------------------------------------------------
+mainApp.express.get('/api/meta', function(req, res) {
+	res.send({
+		mainFolder: mainApp.mainFolder(),
+		username: low(app.getPath('appData') + '/codecast/db.json').getState().username
+	})
+})
+
+
+// ------------------------------------------------------------
 //   IPC Events
 // ------------------------------------------------------------
+
+ipcMain.on('turn-on', function(event) {
+	mainApp.on()
+	
+	event.sender.send('turned-on')
+})
+
+ipcMain.on('turn-off', function(event) {
+	mainApp.off()
+	
+	event.sender.send('turned-off')
+})
+
+ipcMain.on('get-status', function(event) {
+	var status = mainApp.listening()
+	
+	event.sender.send('listening-status', status)
+})
 
 ipcMain.on('request-io-update', function(event) {
 	event.sender.send('user-connection', {

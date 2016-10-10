@@ -19,6 +19,10 @@ angular.module('app.routes')
 			templateUrl: 'angular/views/broadcast.html',
 			controller: 'BroadcastCtrl'
 		})
+		.when('/settings', {
+			templateUrl: 'angular/views/settings.html',
+			controller: 'SettingsCtrl'
+		})
 		
 		.otherwise({
 			redirectTo: '/'

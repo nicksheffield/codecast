@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('ScanCtrl', function($scope, $db, $location, $store) {
+.controller('ScanCtrl', function($scope, $db, $location, $store, $http) {
 	
 	$scope.username = $db.state.username
 	
@@ -43,12 +43,22 @@ angular.module('app.controllers')
 				if(found === undefined) {
 					$scope.broadcasters.push(data)
 				}
+				
+				// get meta
+				$http.get('http://' + data.ip + ':3000/api/meta')
+					.then(function(res) {
+						var caster = _.find($scope.broadcasters, function(item) {
+							return data.ip == item.ip
+						})
+						caster.meta = res.data
+						console.log('meta response', res.data)
+					})
 			} else {
-				var found = _.find($scope.broadcasters, function(item) {
+				var found2 = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
 				
-				if(found) {
+				if(found2) {
 					$scope.broadcasters = _.reject($scope.broadcasters, function(item) {
 						return item.ip == data.ip
 					})

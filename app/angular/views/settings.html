@@ -1,0 +1,23 @@
+<div ng-include="'angular/views/header.html'"></div>
+
+<div class="page-content" ratio="1">
+	
+	<div layout="row" align="center" justify="between">
+		<h1>Settings</h1>
+		
+		<div>
+			<button class="btn btn-primary btn-icon" ng-click="save()">
+				<i class="fa fa-floppy-o fa-fw"></i>
+				Save
+			</button>
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="form-group">
+		<label for="username">Username</label>
+		<input type="text" ng-model="db.username" id="username" class="form-control">
+	</div>
+	
+</div>
