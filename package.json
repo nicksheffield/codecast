@@ -13,7 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "bower": "^1.7.9",
     "chokidar": "^1.6.0",
     "electron": "^1.4.3",
     "electron-context-menu": "^0.6.0",
@@ -26,6 +25,7 @@
     "socket.io": "^1.5.0"
   },
   "devDependencies": {
+    "bower": "^1.7.9",
     "electron-packager": "^8.1.0",
     "gulp": "^3.9.0",
     "gulp-add-src": "^0.2.0",
