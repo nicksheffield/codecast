@@ -11,7 +11,6 @@ var http        = require('http').Server(exapp)
 var io          = require('socket.io')(http)
 var chokidar    = require('chokidar')
 var bodyParser  = require('body-parser')
-var chalk       = require('chalk')
 
 var fileApp = express()
 var fileServer = require('http').Server(fileApp)
