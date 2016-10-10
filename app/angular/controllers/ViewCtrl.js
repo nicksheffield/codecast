@@ -161,12 +161,17 @@ angular.module('app.controllers')
 	
 
 	var menu = new Menu()
-	menu.append(new MenuItem({label: 'Open in Browser', click: function(){
-		shell.openExternal('http://' + ip + ':3333/' + $scope.currentFile.shortpath)
+	
+	menu.append(new MenuItem({label: 'Open in Browser'/*, accelerator: 'Cmd+o'*/, click: function() {
+		if($scope.currentFile) {
+			shell.openExternal('http://' + ip + ':3333/' + $scope.currentFile.shortpath)
+		}
 	}}))
+	
+	Menu.setApplicationMenu(menu)
 
-	window.addEventListener('contextmenu', function(e) {
+	window.oncontextmenu = function(e) {
 		e.preventDefault()
 		menu.popup(remote.getCurrentWindow())
-	}, false)
+	}
 });
