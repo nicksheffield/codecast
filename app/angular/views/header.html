@@ -1,0 +1,27 @@
+<header layout="row" justify="between" align="center" ng-controller="HeaderCtrl">
+	<h1>CodeCast</h1>
+	
+	<div class="btn-group">
+		<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			{{ username }}
+		</button>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a href="#/second" class="dropdown-item">
+				<i class="fa fa-fw fa-feed"></i>
+				View
+			</a>
+			
+			<a href="#/broadcast" class="dropdown-item">
+				<i class="fa fa-fw fa-bullhorn"></i>
+				Broadcast
+			</a>
+			
+			<div class="dropdown-divider"></div>
+			
+			<button class="dropdown-item" ng-click="forget()">
+				<i class="fa fa-fw fa-meh-o"></i>
+				That's not my name!
+			</button>
+		</div>
+	</div>
+</header>

@@ -1,0 +1,58 @@
+<div layout="full-col" ratio="1">
+	
+	<div ng-include="'angular/views/header.html'"></div>
+	
+	<div class="viewer wrapper" layout="col" ratio="1">
+	
+		<div layout="row" ratio="1">
+			<ul class="file-nav" id="nav">
+				<li ng-repeat="file in files" ng-class="{file: file.type == 'file', directory: file.type == 'directory'}">
+					<file-nav-item data="file" choose="choose" current="currentFile" opening="openingFuncs" changing="changingFuncs" />
+				</li>
+			</ul>
+			
+			<div class="content" id="content" ratio="1" layout="col">
+				<div ratio="1" layout="col">
+					<div class="tabs" layout="row">
+						<div class="tab" ng-repeat="file in openFiles" ng-click="choose(file, $event)" ng-class="{current: currentFile.path == file.path, changed: changingFuncs.isChanged(file)}" ratio="1" layout="row" align="center">
+							<span class="filename">
+								{{ file.name }}
+							</span>
+							
+							<button class="close-btn" ng-click="removeFromTab(file)">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<div ng-show="syntax && !currentFile.imageurl" ratio="1" class="code-panel">
+						<pre ratio="1" class="{{ syntax }} line-numbers"><code class="{{ syntax }}" ng-bind="fileContent"></code></pre>
+					</div>
+					
+					<div ng-show="!syntax && !currentFile.imageurl" layout="col" justify="center" align="center" ratio="1" class="no-file-chosen">
+						<rand>
+							<span>&lt; &gt;</span>
+							<span>{ }</span>
+							<span>[ ]</span>
+							<span>( )</span>
+						</rand>
+					</div>
+					
+					<div ng-show="!syntax && currentFile.imageurl" layout="col" justify="center" align="center" ratio="1">
+						<img ng-src="{{currentFile.imageurl}}" alt="">
+					</div>
+				</div>
+				
+				
+			</div>
+	
+			<div id="sidebar-resizer" 
+				resizer="vertical" 
+				resizer-width="6" 
+				resizer-left="#nav" 
+				resizer-right="#content"
+				resizer-max="400"
+				resizer-min="100">
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,1 +1,16 @@
-<h1>Yo it's working!</h1>
+<div ng-include="'angular/views/header.html'"></div>
+
+<div class="page-content" ratio="1">
+	
+	<form ng-submit="set()">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" ng-model="username" class="form-control">
+				<div class="input-group-btn">
+					<input type="submit" value="Thats'a me, {{ username }}" class="btn btn-primary">
+				</div>
+			</div>
+		</div>
+	</form>
+	
+</div>

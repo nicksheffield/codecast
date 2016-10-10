@@ -1,0 +1,63 @@
+.tabs
+	background navbg
+	font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
+	font-weight bold
+	user-select none
+	min-height 50px
+	
+	.tab
+		max-width 30%
+		padding 0 1.5em
+		height 50px
+		line-height 50px
+		font-size 0.8em
+		overflow hidden
+		box-shadow 1px 0 0 lighten(navbg, 15%)
+		cursor pointer
+		color rgba(255, 255, 255, 0.5)
+		position relative
+		white-space nowrap
+		border-bottom 2px solid rgba(0, 0, 0, 0)
+		transition background 0.2s
+		line-height normal
+		
+		&:last-child
+			box-shadow none
+		
+		&:hover
+			background lighten(navbg, 5%)
+			
+		&.current
+			color #fff
+			border-bottom-color #fff
+		
+		&:hover
+			.close-btn
+				transform scale(1)
+		
+		&.changed
+			color changed-color
+			animation glow 1s infinite
+			
+		.close-btn
+			transform scale(0)
+			position absolute
+			top calc(50% - 0.6em)
+			right 1em
+			background rgba(0, 0, 0, 0)
+			border 0
+			transition transform 0.2s ease
+			outline 0
+			padding 0
+			
+			i.fa
+				color #fff
+				text-shadow 0 0 10px #000
+				font-size 1.5em
+				transition color 0.1s ease
+			
+			&:hover
+				cursor pointer
+				
+				i.fa
+					color #d00

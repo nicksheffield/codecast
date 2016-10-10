@@ -17,7 +17,7 @@ var templateCache = require('gulp-angular-templatecache')   // cache angular tem
 
 var paths = {
 	stylus: {
-		files: ['app/stylus/*.styl'],
+		files: ['app/stylus/*.styl', 'app/stylus/**/*.styl'],
 		main: 'app/stylus/main.styl'
 	},
 	views: ['app/angular/**/*.html'],

@@ -3,16 +3,47 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Codecast</title>
-	<script src="components/jquery/dist/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<script src="components/jquery/dist/jquery.js"></script>
+	<script>try{$=jQuery=module.exports}catch(e){} // https://github.com/electron/electron/issues/345</script>
 	<script src="components/angular/angular.min.js"></script>
 	<script src="components/angular-route/angular-route.min.js"></script>
 	<script src="components/lodash/dist/lodash.min.js"></script>
+	<script src="components/tether/dist/js/tether.min.js"></script>
+	<script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<script src="components/prism/prism.js"></script>
+	<script src="components/prism/components/prism-markup.min.js"></script>
+	<script src="components/prism/components/prism-css.min.js"></script>
+	<script src="components/prism/components/prism-javascript.min.js"></script>
+	<script src="components/prism/components/prism-php.min.js"></script>
+	<script src="components/prism/components/prism-sql.min.js"></script>
+	<script src="components/prism/components/prism-markdown.min.js"></script>
+	<script src="components/prism/components/prism-stylus.min.js"></script>
+	<script src="components/prism/components/prism-sass.min.js"></script>
+	<script src="components/prism/components/prism-less.min.js"></script>
+	<script src="components/prism/components/prism-json.min.js"></script>
+	<script src="components/prism/components/prism-bash.min.js"></script>
+	<script src="components/prism/plugins/previewer-base/prism-previewer-base.min.js"></script>
+	<script src="components/prism/plugins/previewer-color/prism-previewer-color.min.js"></script>
+	<script src="components/prism/plugins/previewer-gradient/prism-previewer-gradient.min.js"></script>
+	<script src="components/prism/plugins/line-numbers/prism-line-numbers.min.js"></script>
+	
+	<script src="scripts/socket.io-1.4.5.js"></script>
 	<script src="dist/app.min.js"></script>
+	
 	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/flexy/flexy.min.css">
+	<link rel="stylesheet" href="components/prism/themes/prism-okaidia.css">
+	<link rel="stylesheet" href="components/prism/plugins/line-numbers/prism-line-numbers.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-base/prism-previewer-base.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-color/prism-previewer-color.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-gradient/prism-previewer-gradient.css">
 	<link rel="stylesheet" href="dist/style.min.css">
 </head>
 <body>
-	<div ng-view></div>
+	<div ng-view layout="full-col"></div>
 </body>
 </html>

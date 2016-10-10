@@ -19,6 +19,8 @@
     "lodash": "^4.16.4",
     "angular-route": "^1.5.8",
     "font-awesome": "fontawesome#^4.6.3",
-    "bootstrap": "4.0.0-alpha.4"
+    "bootstrap": "4.0.0-alpha.4",
+    "flexy": "^0.0.8",
+    "prism": "^1.5.1"
   }
 }

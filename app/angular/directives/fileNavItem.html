@@ -1,0 +1,19 @@
+<div class="file-nav-item">
+	
+	<span class="name" ng-class="{current: current.path == data.path, changed: changing.isChanged(data) || containsChanged()}">
+		<span ng-show="data.type == 'directory'">
+			<span class="icon" ng-if="!opening.isOpen(data)"><i class="fa fa-folder"></i></span>
+			<span class="icon" ng-if="opening.isOpen(data)"><i class="fa fa-folder-open"></i></span>
+		</span>
+		<span class="icon" ng-if="data.type == 'file'">
+			<i class="fa fa-file-o"></i>
+		</span>
+		{{ data.name }}
+	</span>
+
+	<ul ng-show="data.type == 'directory' && opening.isOpen(data)">
+		<li ng-repeat="file in data.files" ng-class="{file: file.type == 'file', directory: file.type == 'directory'}">
+			<file-nav-item data="file" choose="choose" current="current" opening="opening" changing="changing" />
+		</li>
+	</ul>
+</div>
