@@ -6,3 +6,4 @@ Todo
 	- Ignore .app files because it treats it like a folder
 	- Ignore .asar files
 	- Add .bowerrc "directory" to live-file-view ignores
+	- Copy and paste isn't working

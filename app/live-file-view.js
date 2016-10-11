@@ -44,7 +44,6 @@ function allIgnores() {
 // ------------------------------------------------------------
 var mainFolder = ''
 
-
 function setFolder(folder) {
 	if(!folder || !folder[0]) return false
 

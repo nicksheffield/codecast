@@ -168,7 +168,7 @@ angular.module('app.controllers')
 		}
 	}}))
 	
-	Menu.setApplicationMenu(menu)
+	// Menu.setApplicationMenu(menu)
 
 	window.oncontextmenu = function(e) {
 		e.preventDefault()
