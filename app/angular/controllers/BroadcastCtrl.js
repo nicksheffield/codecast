@@ -1,7 +1,8 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $db) {
+.controller('BroadcastCtrl', function($scope, $db, $menu) {
 	$scope.casting = false
+	$menu.openInBrowser(false)
 	
 	$scope.mainFolder = ''
 	

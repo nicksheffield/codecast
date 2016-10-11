@@ -1,6 +1,7 @@
 angular.module('app.controllers')
 
-.controller('ScanCtrl', function($scope, $db, $location, $store, $http) {
+.controller('ScanCtrl', function($scope, $db, $location, $store, $http, $menu) {
+	$menu.openInBrowser(false)
 	
 	$scope.username = $db.state.username
 	

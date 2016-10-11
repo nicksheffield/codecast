@@ -3,10 +3,6 @@ angular.module('app.routes')
 .config(function($routeProvider) {
 
 	$routeProvider
-		.when('/', {
-			templateUrl: 'angular/views/home.html',
-			controller: 'HomeCtrl'
-		})
 		.when('/scan', {
 			templateUrl: 'angular/views/scan.html',
 			controller: 'ScanCtrl'
@@ -25,7 +21,7 @@ angular.module('app.routes')
 		})
 		
 		.otherwise({
-			redirectTo: '/'
+			redirectTo: '/scan'
 		})
 	
 })

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket) {
+.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket, $remote, $menu) {
 	$scope.currentFile = {}
 	$scope.fileContent = ''
 	$scope.syntax = ''
@@ -11,6 +11,14 @@ angular.module('app.controllers')
 	
 	var ip = $routeParams.ip
 	var host = 'http://' + ip + ':3000'
+	
+	$menu.ip = ip
+	$menu.openInBrowser(true)
+	
+	$scope.$watch('currentFile', function(newVal) {
+		console.log('currentFile changed')
+		$menu.currentFile = newVal
+	})
 	
 	$scope.openingFuncs = {
 		isOpen: function(file) {
@@ -39,7 +47,7 @@ angular.module('app.controllers')
 		},
 		change: function(file) {
 			$scope.changed.push(file.path)
-			// $scope.$apply()
+			$scope.$apply()
 		},
 		unchange: function(file) {
 			_.remove($scope.changed, function(path) {
@@ -150,28 +158,5 @@ angular.module('app.controllers')
 				}
 			}
 		})
-	}
-	
-	
-	
-	var shell = require('electron').shell
-	var remote = require('electron').remote
-	var Menu = remote.Menu
-	var MenuItem = remote.MenuItem
-	
-
-	var menu = new Menu()
-	
-	menu.append(new MenuItem({label: 'Open in Browser'/*, accelerator: 'Cmd+o'*/, click: function() {
-		if($scope.currentFile) {
-			shell.openExternal('http://' + ip + ':3333/' + $scope.currentFile.shortpath)
-		}
-	}}))
-	
-	// Menu.setApplicationMenu(menu)
-
-	window.oncontextmenu = function(e) {
-		e.preventDefault()
-		menu.popup(remote.getCurrentWindow())
 	}
 });

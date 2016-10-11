@@ -34,9 +34,9 @@ gulp.task('css', function() {
 	// prepare css code
 	var stream = gulp.src(paths.stylus.main)          // grab our stylus file
 		.pipe(plumber(plumberOpts))                   // notify us if any errors appear
-		.pipe(sourcemap.init())                       // get ready to write a sourcemap
+		//.pipe(sourcemap.init())                       // get ready to write a sourcemap
 		.pipe(stylus())                               // turn the stylus into css
-		.pipe(sourcemap.write())                      // write the sourcemap
+		//.pipe(sourcemap.write())                      // write the sourcemap
 		.pipe(autoprefix('last 2 versions'))          // autoprefix the css code
 	
 	// make style.css
@@ -47,7 +47,7 @@ gulp.task('css', function() {
 	// make style.min.css
 	stream.pipe(clone())                              // make a copy of the stream up to autoprefix
 		.pipe(minifycss())                            // minify it (removes the sourcemap)
-		.pipe(sourcemap.write())                      // write the sourcemap
+		//.pipe(sourcemap.write())                      // write the sourcemap
 		.pipe(rename('style.min.css'))                // add .min to the filename
 		.pipe(gulp.dest(paths.output))                // save it into the dist folder
 	
