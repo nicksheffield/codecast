@@ -1,0 +1,4 @@
+Todo
+
+	- Socket doesn't disconnect when you leave, and a new one connects when you go back to viewing
+	
