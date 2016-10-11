@@ -11,6 +11,7 @@ var http        = require('http').Server(exapp)
 var io          = require('socket.io')(http)
 var chokidar    = require('chokidar')
 var bodyParser  = require('body-parser')
+var path        = require('path')
 
 var fileApp = express()
 var fileServer = require('http').Server(fileApp)
@@ -23,12 +24,19 @@ var fileServer = require('http').Server(fileApp)
 var defaultIgnore = [
 	'.DS_Store',
 	'node_modules/',
+	'bower_components/',
 	'vendor/',
 	'storage/',
 	'.git/',
 	'sftp_config.json',
 	'project.sublime-workspace'
 ]
+
+var otherIgnore = []
+
+function allIgnores() {
+	return defaultIgnore.concat(otherIgnore)
+}
 
 
 // ------------------------------------------------------------
@@ -41,14 +49,27 @@ function setFolder(folder) {
 	if(!folder || !folder[0]) return false
 
 	var stat = fs.lstatSync(folder[0])
-
+	
 	if(!stat.isDirectory()) return false
-		
+	
 	mainFolder = folder[0] + '/'
 	
 	console.log('mainFolder chosen:', mainFolder)
 	
 	io.emit('fsupdate')
+	
+	otherIgnore = []
+	
+	// ------------------------------------------------------------
+	//   Bower ignore
+	// ------------------------------------------------------------
+	if(fs.exists(mainFolder + '/.bowerrc')) {
+		var bowerrc = JSON.parse(fs.readFileSync(mainFolder + '/.bowerrc', "utf8"))
+		
+		if(bowerrc.directory) {
+			otherIgnore.push(bowerrc.directory)
+		}
+	}
 	
 	// ------------------------------------------------------------
 	//   Set Express Static Middleware
@@ -78,7 +99,7 @@ function setFolder(folder) {
 	// ------------------------------------------------------------
 	//   FS Events
 	// ------------------------------------------------------------
-	var watcher = chokidar.watch(mainFolder, {ignored: defaultIgnore.map((str) => mainFolder+str), ignoreInitial: true})
+	var watcher = chokidar.watch(mainFolder, {ignored: allIgnores().map((str) => mainFolder+str), ignoreInitial: true})
 
 	watcher.on('all', (event, path) => {
 		// console.log('chokidar', event, path)
@@ -175,41 +196,50 @@ exapp.post('/api/get_file', function(req, res) {
 //   Recursive Datastructure for Dirs and Files
 // ------------------------------------------------------------
 function findFiles(folder) {
-	var paths = fs.readdirSync(folder.path)
-	var files = []
-
-	paths.forEach(function(path) {
-		var thing = {}
-		var stat = fs.lstatSync(folder.path + path)
-		var name = path + (stat.isDirectory() ? '/' : '')
-		
-		thing.type = stat.isFile() ? 'file' : 'directory'
-		thing.path = folder.path + name
-		thing.name = name
-		thing.shortpath = thing.path.replace(mainFolder, '')
-		
-		if(defaultIgnore.indexOf(name) !== -1) return
-			
-		if(thing.type == 'file') {
-			if(checkIfExcludedFile(thing.shortpath)) {
-				return
-			}
-		} else {
-			if(checkIfExcludedFolder(thing.shortpath)) {
-				return
-			}
-		}
-		
-		if(thing.type == 'directory') {
-			thing.files = findFiles(thing)
-		}
-		
-		files.push(thing)
-	})
+	var folderStat = fs.lstatSync(folder.path)
 	
-	return _.sortBy(files, function(file) {
-		return file.type !== 'directory'
-	})
+	if(folderStat.isDirectory() && path.extname(folder.path) !== '.asar') {
+		var paths = fs.readdirSync(folder.path)
+		var files = []
+
+		paths.forEach(function(path) {
+			var thing = {}
+			var stat = fs.lstatSync(folder.path + path)
+			var name = path + (stat.isDirectory() ? '/' : '')
+			
+			thing.type = stat.isFile() ? 'file' : 'directory'
+			thing.path = folder.path + name
+			thing.name = name
+			thing.shortpath = thing.path.replace(mainFolder, '')
+			
+			if(allIgnores().indexOf(name) !== -1) return
+				
+			if(thing.type == 'file') {
+				if(checkIfExcludedFile(thing.shortpath)) {
+					return
+				}
+			} else if(thing.type == 'directory') {
+				if(checkIfExcludedFolder(thing.shortpath)) {
+					return
+				}
+			} else {
+				console.log('dunno what this is', thing)
+				return
+			}
+			
+			if(thing.type == 'directory') {
+				thing.files = findFiles(thing)
+			}
+			
+			files.push(thing)
+		})
+		
+		return _.sortBy(files, function(file) {
+			return file.type !== 'directory'
+		})
+	} else {
+		return []
+	}
 }
 
 

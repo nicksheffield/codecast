@@ -1,4 +1,8 @@
 Todo
 
 	- Socket doesn't disconnect when you leave, and a new one connects when you go back to viewing
-	
+	- Something weird going on with sizes when code is too wide
+		- probably the same issue is causing html tags to be tiny
+	- Ignore .app files because it treats it like a folder
+	- Ignore .asar files
+	- Add .bowerrc "directory" to live-file-view ignores

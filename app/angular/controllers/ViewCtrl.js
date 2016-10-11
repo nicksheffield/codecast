@@ -39,7 +39,7 @@ angular.module('app.controllers')
 		},
 		change: function(file) {
 			$scope.changed.push(file.path)
-			$scope.$apply()
+			// $scope.$apply()
 		},
 		unchange: function(file) {
 			_.remove($scope.changed, function(path) {
