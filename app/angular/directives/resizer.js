@@ -25,7 +25,8 @@ angular.module('app.directives')
 			})
 
 			$($attrs.resizerRight).css({
-				left: (x + parseInt($attrs.resizerWidth)) + 'px'
+				left: (x + parseInt($attrs.resizerWidth)) + 'px',
+				width: (window.innerWidth - 6 - x) + 'px'
 			})
 		}
 
