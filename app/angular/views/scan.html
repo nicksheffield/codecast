@@ -1,41 +1,40 @@
 <div ng-include="'angular/views/header.html'"></div>
 
-<div class="page-content" ratio="1">
-	
-	<div layout="row" align="center" justify="between">
+<div ratio="1">
+	<div class="page-top" layout="row" align="center" justify="between">
 		<h1>Broadcasters</h1>
 		
-		<button class="btn btn-primary btn-icon-right" ng-click="scan()">
+		<button class="btn btn-primary btn-icon" ng-click="scan()">
+			<i class="fa fa-fw fa-refresh fa-spin" ng-show="scanning"></i>
 			Scan
-			<i class="fa fa-fw fa-spinner fa-pulse" ng-show="scanning"></i>
 		</button>
 	</div>
 	
-	<hr>
-	
-	<ul class="broadcasters">
-		<li ng-repeat="caster in broadcasters" class="broadcaster">
-			<a href="#/view/{{ caster.ip }}" layout="row" align="center">
-				<div layout="col" ratio="1">
-					<div class="username">
-						{{ caster.meta.username }}
+	<div class="page-content">
+		<ul class="broadcasters">
+			<li ng-repeat="caster in broadcasters" class="broadcaster">
+				<a href="#/view/{{ caster.ip }}" layout="row" align="center">
+					<div layout="col" ratio="1">
+						<div class="username">
+							{{ caster.meta.username }}
+						</div>
+						<div class="folder">
+							{{ caster.meta.mainFolder }}
+						</div>
 					</div>
-					<div class="folder">
-						{{ caster.meta.mainFolder }}
+					<div class="ip">
+						{{ caster.ip }}
 					</div>
-				</div>
-				<div class="ip">
-					{{ caster.ip }}
-				</div>
-			</a>
-		</li>
-		
-		<li ng-if="!broadcasters.length && !scanning">
-			No broadcasters were found
-		</li>
-		
-		<li ng-if="!broadcasters.length && scanning">
-			Scanning...
-		</li>
-	</ul>
+				</a>
+			</li>
+			
+			<li ng-if="!broadcasters.length && !scanning">
+				No broadcasters were found
+			</li>
+			
+			<li ng-if="!broadcasters.length && scanning">
+				Scanning...
+			</li>
+		</ul>
+	</div>
 </div>

@@ -1,7 +1,11 @@
 angular.module('app.services')
 
-.factory('$store', function() {
+.factory('$store', function($db) {
+	var mainFolder = $db.state.currentFolder
+	
 	return {
-		broadcasters: []
+		broadcasters: [],
+		casting: false,
+		mainFolder: mainFolder
 	}
 })

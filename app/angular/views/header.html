@@ -1,4 +1,4 @@
-<header layout="row" justify="between" align="center" ng-controller="HeaderCtrl">
+<header class="site-header" layout="row" justify="between" align="center" ng-controller="HeaderCtrl">
 	<h1>CodeCast</h1>
 	
 	<nav>
@@ -11,7 +11,9 @@
 			</li>
 			<li>
 				<a href="#/broadcast" ng-class="{current: current == '/broadcast'}">
-					<i class="fa fa-fw fa-bullhorn"></i>
+					<!-- <i class="fa fa-fw fa-bullhorn"></i> -->
+					<i ng-if="store.casting" class="fa fa-fw fa-toggle-on"></i>
+					<i ng-if="!store.casting" class="fa fa-fw fa-toggle-off"></i>
 					<span>Broadcast</span>
 				</a>
 			</li>

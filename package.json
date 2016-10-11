@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "bower": "^1.7.9",
+    "devtron": "^1.4.0",
     "electron-packager": "^8.1.0",
     "gulp": "^3.9.0",
     "gulp-add-src": "^0.2.0",

@@ -1,10 +1,20 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $db, $menu) {
-	$scope.casting = false
+.controller('BroadcastCtrl', function($scope, $db, $menu, $store) {
+	$scope.casting = $store.casting
 	$menu.openInBrowser(false)
 	
-	$scope.mainFolder = ''
+	$scope.mainFolder = $store.mainFolder
+	
+	$scope.$watch('casting', function(newVal) {
+		$store.casting = newVal
+	})
+	
+	$scope.$watch('mainFolder', function(newVal) {
+		$store.mainFolder = newVal
+		$db.state.currentFolder = newVal
+		$db.save()
+	})
 	
 	var ipcRenderer = require('electron').ipcRenderer
 
@@ -18,8 +28,6 @@ angular.module('app.controllers')
 	})
 
 	ipcRenderer.on('list-folders', function(event, folders) {
-		folders = folders.reverse()
-		
 		$scope.folders = folders.reverse()
 		$scope.$apply()
 	})
@@ -49,6 +57,11 @@ angular.module('app.controllers')
 
 	$scope.openDialog = function() {
 		ipcRenderer.send('open-file-dialog')
+	}
+	
+	$scope.setFolder = function(folder) {
+		$scope.mainFolder = folder
+		ipcRenderer.send('drop-folder', $scope.mainFolder)
 	}
 
 	ipcRenderer.on('selected-directory', function (event, path) {

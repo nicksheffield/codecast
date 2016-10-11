@@ -1,8 +1,7 @@
 <div ng-include="'angular/views/header.html'"></div>
 
-<div class="page-content" ratio="1">
-	
-	<div layout="row" align="center" justify="between">
+<div ratio="1">
+	<div class="page-top" layout="row" align="center" justify="between">
 		<h1>Settings</h1>
 		
 		<div>
@@ -13,11 +12,10 @@
 		</div>
 	</div>
 	
-	<hr>
-	
-	<div class="form-group">
-		<label for="username">Username</label>
-		<input type="text" ng-model="db.username" id="username" class="form-control">
+	<div class="page-content">
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" ng-model="db.username" id="username" class="form-control">
+		</div>
 	</div>
-	
 </div>

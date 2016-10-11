@@ -33,7 +33,8 @@ var username = homeDir[homeDir.length-1]
 
 db.defaults({
 	username: username,
-	folders: []
+	folders: [],
+	currentFolder: ''
 }).value()
 
 console.log('dataDir', dataDir)
@@ -54,6 +55,8 @@ app.on('ready', function() {
 		y: inset + 25,
 		titleBarStyle: 'hidden-inset'
 	})
+	
+	require('devtron').install()
 	
 	mainWindow.loadURL(`file://${__dirname}/app.html`)
 	

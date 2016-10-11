@@ -1,22 +1,38 @@
 <div ng-include="'angular/views/header.html'"></div>
 
-<div class="page-content" ratio="1">
-	<div layout="row" justify="between" align="center">
+<div ratio="1">
+	<div class="page-top" layout="row" justify="between" align="center">
 		<h1>Broadcast</h1>
 		
 		<div>
-			<button class="btn btn-icon" ng-class="{'btn-danger': !casting, 'btn-success': casting}" ng-click="toggleCasting()">
-				<i class="fa fa-power-off"></i>
+			<span class="btn">
+				<i class="fa fa-eye"></i>
+				{{ userCount }}
+			</span>
+			
+			<button class="btn btn-info" ng-click="openDialog()">
+				<i class="fa fa-folder-open"></i>
+				Browse
+			</button>
+	
+			<button class="btn btn-icon" ng-class="{'btn-normal': !casting, 'btn-success': casting}" ng-click="toggleCasting()">
+				<i ng-if="casting" class="fa fa-fw fa-toggle-on"></i>
+				<i ng-if="!casting" class="fa fa-fw fa-toggle-off"></i>
 				Cast
-				<span ng-if="casting">(on)</span>
-				<span ng-if="!casting">(off)</span>
 			</button>
 		</div>
 	</div>
 	
-	<p>User Count: {{ userCount }}</p>
-	
-	<p>mainFolder: {{ mainFolder }}</p>
-	
-	<button ng-click="openDialog()">Browse</button>
+	<div class="page-content">
+		
+		<p>Current folder: {{ mainFolder[0] }}</p>
+		
+		<b>Previous folders</b>
+		
+		<ul class="history">
+			<li class="folder" ng-repeat="folder in folders" ng-click="setFolder(folder)">
+				{{ folder }}
+			</li>
+		</ul>
+	</div>
 </div>
