@@ -56,6 +56,7 @@ angular.module('app.controllers')
 		$config.set('currentFolder', '')
 		
 		$scope.mainFolder = ''
+		$ipc.send('clear-folder')
 	}
 
 	$scope.clearHistory = function() {

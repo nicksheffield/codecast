@@ -272,6 +272,11 @@ module.exports = {
 	server: http,
 	express: exapp,
 	setFolder: setFolder,
+	clearFolder: function() {
+		mainFolder = ''
+		
+		io.emit('fsupdate')
+	},
 	mainFolder: function() {
 		return mainFolder
 	},

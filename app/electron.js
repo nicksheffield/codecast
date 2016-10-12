@@ -304,11 +304,15 @@ ipcMain.on('request-io-update', function(event) {
 	})
 })
 
+ipcMain.on('clear-folder', function(event, path) {
+	mainApp.clearFolder()
+})
+
 ipcMain.on('open-file-dialog', function(event) {
 	var window = BrowserWindow.fromWebContents(event.sender)
 	var files = dialog.showOpenDialog(window, { properties: [ 'openDirectory' ]})
 	
-	setFolder(event, files[0])
+	setFolder(event, files[0] + '/')
 })
 
 ipcMain.on('drop-folder', function(event, path) {
