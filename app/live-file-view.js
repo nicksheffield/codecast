@@ -62,12 +62,10 @@ function setFolder(folder) {
 	// ------------------------------------------------------------
 	//   Bower ignore
 	// ------------------------------------------------------------
-	if(fs.exists(mainFolder + '/.bowerrc')) {
-		var bowerrc = JSON.parse(fs.readFileSync(mainFolder + '/.bowerrc', "utf8"))
+	if(fs.existsSync(mainFolder + '.bowerrc')) {
+		var bowerrc = JSON.parse(fs.readFileSync(mainFolder + '.bowerrc', "utf8"))
 		
-		if(bowerrc.directory) {
-			otherIgnore.push(bowerrc.directory)
-		}
+		if(bowerrc.directory) otherIgnore.push(bowerrc.directory)
 	}
 	
 	// ------------------------------------------------------------
@@ -99,6 +97,8 @@ function setFolder(folder) {
 	//   FS Events
 	// ------------------------------------------------------------
 	var watcher = chokidar.watch(mainFolder, {ignored: allIgnores().map((str) => mainFolder+str), ignoreInitial: true})
+
+	console.log('allIgnores', allIgnores())
 
 	watcher.on('all', (event, path) => {
 		// console.log('chokidar', event, path)
@@ -211,8 +211,10 @@ function findFiles(folder) {
 			thing.name = name
 			thing.shortpath = thing.path.replace(mainFolder, '')
 			
-			if(allIgnores().indexOf(name) !== -1) return
-				
+			if(allIgnores().indexOf(thing.shortpath) !== -1) {
+				return
+			}
+			
 			if(thing.type == 'file') {
 				if(checkIfExcludedFile(thing.shortpath)) {
 					return

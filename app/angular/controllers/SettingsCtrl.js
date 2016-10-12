@@ -1,11 +1,12 @@
 angular.module('app.controllers')
 
-.controller('SettingsCtrl', function($scope, $db, $location, $menu, $ipc, $socket) {
+.controller('SettingsCtrl', function($scope, $db, $location, $menu, $ipc, $socket, $package) {
 	$socket.disconnect()
 	$scope.db = $db.state
 	$menu.openInBrowser(false)
 	
 	$scope.saved = false
+	$scope.package = $package.json
 	
 	$scope.$watch('db', function() {
 		$scope.saved = false
@@ -17,9 +18,5 @@ angular.module('app.controllers')
 		$scope.saved = true
 	}
 	
-	$ipc.send('get-package')
 	
-	$ipc.on('got-package', function(event, data) {
-		$scope.package = data
-	})
 })

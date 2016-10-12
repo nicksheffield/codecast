@@ -1,5 +1,9 @@
 <header class="site-header" layout="row" justify="between" align="center" ng-controller="HeaderCtrl">
-	<h1>CodeCast</h1>
+	<div layout="row" align="center">
+		<h1><i class="fa fa-code fa-fw"></i>CodeCast</h1>
+		<!-- <span class="beta">Beta</span> -->
+		<span class="version">{{ package.version }}</span>
+	</div>
 	
 	<nav>
 		<ul layout="row">
