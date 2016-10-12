@@ -6,5 +6,6 @@ Todo
 	- not such a bad error when you try to cast a folder that has been moved
 	- Better organisation in electron.js and live-file-view.js
 		- maybe refactor them both into the same structure
+			- oh shit, maybe move live-file-view stuff into the renderer?
 	- Two package.json structure
 	- Move away from bower

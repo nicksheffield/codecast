@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $db, $menu, $store, $ipc, $socket) {
+.controller('BroadcastCtrl', function($scope, $config, $menu, $store, $ipc, $socket, $timeout) {
 	$socket.disconnect()
 	$scope.casting = $store.casting
 	$menu.openInBrowser(false)
@@ -9,25 +9,14 @@ angular.module('app.controllers')
 		$store.casting = newVal
 	})
 	
-	$scope.$watch('mainFolder', function(newVal, oldVal) {
-		$store.mainFolder = newVal
-		$db.state.currentFolder = newVal
-		$db.save()
-	})
-	
-	$scope.mainFolder = $store.mainFolder
+	$scope.mainFolder = $store.mainFolder()
+	$scope.folders = $config.get('history')
 	
 	$ipc.send('request-io-update')
-	$ipc.send('get-folders')
 	$ipc.send('get-status')
 	
 	$ipc.on('user-connection', function(event, data) {
 		$scope.userCount = data.count
-		$scope.$apply()
-	})
-	
-	$ipc.on('list-folders', function(event, folders) {
-		$scope.folders = folders.reverse()
 		$scope.$apply()
 	})
 	
@@ -62,6 +51,18 @@ angular.module('app.controllers')
 		$scope.mainFolder = folder
 		$ipc.send('drop-folder', $scope.mainFolder)
 	}
+	
+	$scope.clear = function() {
+		$config.set('currentFolder', '')
+		
+		$scope.mainFolder = ''
+	}
+
+	$scope.clearHistory = function() {
+		$config.set('history', [])
+		
+		$scope.folders = []
+	}
 
 	$ipc.on('selected-directory', function (event, path) {
 		if(path) {
@@ -69,7 +70,10 @@ angular.module('app.controllers')
 			$scope.$apply()
 		}
 		
-		$ipc.send('get-folders')
+		$timeout(function() {
+			$scope.folders = $config.get('history')
+		}, 0)
+		
 	})
 
 	document.ondragover = document.ondrop = function(event) {
@@ -77,8 +81,8 @@ angular.module('app.controllers')
 	}
 
 	document.body.ondrop = function(event) {
-		console.log(event.dataTransfer.files[0].path)
+		console.log(event.dataTransfer.files[0].path + '/')
 		event.preventDefault()
-		$ipc.send('drop-folder', event.dataTransfer.files[0].path)
+		$ipc.send('drop-folder', event.dataTransfer.files[0].path + '/')
 	}
 })

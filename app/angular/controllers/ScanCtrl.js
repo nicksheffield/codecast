@@ -1,17 +1,8 @@
 angular.module('app.controllers')
 
-.controller('ScanCtrl', function($scope, $db, $location, $store, $http, $menu, $socket) {
+.controller('ScanCtrl', function($scope, $location, $store, $http, $menu, $socket) {
 	$socket.disconnect()
 	$menu.openInBrowser(false)
-	
-	$scope.username = $db.state.username
-	
-	$scope.forget = function() {
-		$db.state.username = ''
-		$db.save()
-		
-		$location.path('/')
-	}
 	
 	$scope.scanning = false
 	

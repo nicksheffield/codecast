@@ -15,6 +15,7 @@
     "body-parser": "^1.15.2",
     "chokidar": "^1.6.0",
     "electron": "^1.4.3",
+    "electron-config": "^0.2.1",
     "evilscan": "^1.0.2",
     "express": "^4.14.0",
     "ip": "^1.1.3",

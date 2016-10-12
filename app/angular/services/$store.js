@@ -1,13 +1,11 @@
 angular.module('app.services')
 
-.factory('$store', function($db, $ipc, $timeout) {
-	var mainFolder = $db.state.currentFolder
-	
-	$ipc.send('drop-folder', mainFolder[0])
-	
+.factory('$store', function($config, $ipc, $timeout) {
 	return {
 		broadcasters: [],
 		casting: false,
-		mainFolder: mainFolder
+		mainFolder: function() {
+			return $config.get('currentFolder')
+		}
 	}
 })

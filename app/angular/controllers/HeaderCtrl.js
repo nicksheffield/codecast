@@ -1,11 +1,9 @@
 angular.module('app.controllers')
 
-.controller('HeaderCtrl', function($scope, $db, $location, $store, $ipc, $package) {
-	$scope.username = $db.state.username
-	
+.controller('HeaderCtrl', function($scope, $location, $store, $ipc, $package) {
 	$scope.current = $location.path()
 	
-	$scope.package = $package.json
+	$scope.package = $package
 	
 	$scope.store = $store
 	

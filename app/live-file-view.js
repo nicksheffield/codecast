@@ -12,6 +12,8 @@ var io          = require('socket.io')(http)
 var chokidar    = require('chokidar')
 var bodyParser  = require('body-parser')
 var path        = require('path')
+var Config      = require('electron-config')
+var config      = new Config()
 
 var fileApp = express()
 var fileServer = require('http').Server(fileApp)
@@ -45,13 +47,14 @@ function allIgnores() {
 var mainFolder = ''
 
 function setFolder(folder) {
-	if(!folder || !folder[0]) return false
+	if(!folder) return false
 
-	var stat = fs.lstatSync(folder[0])
+	var stat = fs.lstatSync(folder)
 	
 	if(!stat.isDirectory()) return false
 	
-	mainFolder = folder[0] + '/'
+	mainFolder = folder
+	config.set('currentFolder', mainFolder)
 	
 	console.log('mainFolder chosen:', mainFolder)
 	
@@ -97,8 +100,6 @@ function setFolder(folder) {
 	//   FS Events
 	// ------------------------------------------------------------
 	var watcher = chokidar.watch(mainFolder, {ignored: allIgnores().map((str) => mainFolder+str), ignoreInitial: true})
-
-	console.log('allIgnores', allIgnores())
 
 	watcher.on('all', (event, path) => {
 		// console.log('chokidar', event, path)

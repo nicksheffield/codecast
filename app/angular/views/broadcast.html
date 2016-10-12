@@ -25,14 +25,24 @@
 	
 	<div class="page-content">
 		
-		<p>Current folder: {{ mainFolder[0] }}</p>
+		<div layout="row" align="center" justify="between">
+			<p>Current folder: {{ mainFolder }}</p>
+			<button class="btn btn-sm btn-warning" ng-click="clear()"><i class="fa fa-times"></i></button>
+		</div>
 		
-		<b>Previous folders</b>
+		<hr>
+		
+		<div layout="row" layout="row" align="center" justify="between">
+			<h2>History</h2>
+			
+			<button class="btn btn-sm btn-warning" ng-click="clearHistory()">Clear</button>
+		</div>
 		
 		<ul class="history">
 			<li class="folder" ng-repeat="folder in folders" ng-click="setFolder(folder)">
 				{{ folder }}
 			</li>
 		</ul>
+
 	</div>
 </div>

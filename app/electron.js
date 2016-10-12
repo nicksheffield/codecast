@@ -2,12 +2,13 @@
 //   Dependencies
 // ------------------------------------------------------------
 var electron      = require('electron')
-var low           = require('lowdb')
 var _             = require('lodash')
 var mkdirp        = require('mkdirp')
 var mainApp       = require('./live-file-view')
 var fs            = require('fs')
 var package       = require('../package.json')
+var Config        = require('electron-config')
+var config        = new Config()
 
 
 // ------------------------------------------------------------
@@ -23,22 +24,17 @@ var mainWindow
 
 
 // ------------------------------------------------------------
-//   Data Directory and Lowdb
+//   Config stuff
 // ------------------------------------------------------------
-var dataDir = app.getPath('appData') + '/codecast'
-if(!fs.existsSync(dataDir)) mkdirp(dataDir)
-var db = low(app.getPath('appData') + '/codecast/db.json')
+console.log('config:', config.path)
 
-var homeDir = app.getPath('home').split('/')
-var username = homeDir[homeDir.length-1]
+if(!config.get('username')) {
+	config.set('username', app.getPath('home').replace('/Users/', ''))
+}
 
-db.defaults({
-	username: username,
-	folders: [],
-	currentFolder: ''
-}).value()
-
-console.log('dataDir', dataDir)
+if(config.get('currentFolder')) {
+	mainApp.setFolder(config.get('currentFolder'))
+}
 
 
 // ------------------------------------------------------------
@@ -57,11 +53,10 @@ app.on('ready', function() {
 		//titleBarStyle: 'hidden-inset'
 	})
 	
-	// require('devtron').install()
-	
 	mainWindow.loadURL(`file://${__dirname}/app.html`)
 	
 	// mainWindow.webContents.toggleDevTools()
+	// require('devtron').install()
 	
 	mainWindow.on('closed', function () {
 		mainWindow = null
@@ -257,7 +252,6 @@ mainApp.io.on('connection', function(socket) {
 	
 	socket.on('disconnect', function() {
 		setTimeout(function() {
-			console.log('disconnected', mainApp.io.engine.clientsCount)
 			mainWindow.webContents.send('user-connection', {
 				id: socket.id,
 				count: mainApp.io.engine.clientsCount
@@ -273,7 +267,8 @@ mainApp.io.on('connection', function(socket) {
 mainApp.express.get('/api/meta', function(req, res) {
 	res.send({
 		mainFolder: mainApp.mainFolder(),
-		username: low(app.getPath('appData') + '/codecast/db.json').getState().username
+		// username: low(app.getPath('appData') + '/codecast/db.json').getState().username
+		username: config.get('username')
 	})
 })
 
@@ -314,11 +309,11 @@ ipcMain.on('open-file-dialog', function(event) {
 	var window = BrowserWindow.fromWebContents(event.sender)
 	var files = dialog.showOpenDialog(window, { properties: [ 'openDirectory' ]})
 	
-	setFolder(event, files)
+	setFolder(event, files[0])
 })
 
 ipcMain.on('drop-folder', function(event, path) {
-	setFolder(event, [path])
+	setFolder(event, path)
 })
 
 function setFolder(event, path) {
@@ -326,14 +321,16 @@ function setFolder(event, path) {
 		
 		event.sender.send('selected-directory', path)
 		
-		var data = db.getState()
-		data.folders = _.reject(data.folders, (folder) => folder == path[0])
+		var history = config.get('history')
 		
-		data.folders.push(path[0])
-		db.value()
+		history = _.reject(history, (folder) => folder == path)
+		
+		history.unshift(path)
+		
+		config.set('history', history)
 	}
 }
 
-ipcMain.on('get-folders', function(event) {
-	event.sender.send('list-folders', db.getState().folders)
-})
+// ipcMain.on('get-folders', function(event) {
+// 	event.sender.send('list-folders', config.get('history'))
+// })
