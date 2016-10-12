@@ -56,7 +56,7 @@ app.on('ready', function() {
 		titleBarStyle: 'hidden-inset'
 	})
 	
-	require('devtron').install()
+	// require('devtron').install()
 	
 	mainWindow.loadURL(`file://${__dirname}/app.html`)
 	

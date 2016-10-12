@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "bower": "bower install",
-    "build": "electron-packager . 'codecast' --overwrite && cp icon.icns 'codecast-darwin-x64/codecast.app/Contents/Resources/electron.icns'"
+    "build": "rm -rf codecast-darwin-x64/ && electron-packager . 'codecast' --overwrite && cp icon.icns 'codecast-darwin-x64/codecast.app/Contents/Resources/electron.icns'"
   },
   "keywords": [],
   "author": "Nick Sheffield <numbereft@gmail.com> (http://nicksheffield.me/)",

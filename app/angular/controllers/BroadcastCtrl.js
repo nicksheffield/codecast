@@ -1,76 +1,74 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $db, $menu, $store) {
+.controller('BroadcastCtrl', function($scope, $db, $menu, $store, $ipc) {
 	$scope.casting = $store.casting
 	$menu.openInBrowser(false)
-	
-	$scope.mainFolder = $store.mainFolder
 	
 	$scope.$watch('casting', function(newVal) {
 		$store.casting = newVal
 	})
 	
-	$scope.$watch('mainFolder', function(newVal) {
+	$scope.$watch('mainFolder', function(newVal, oldVal) {
 		$store.mainFolder = newVal
 		$db.state.currentFolder = newVal
 		$db.save()
 	})
 	
-	var ipcRenderer = require('electron').ipcRenderer
-
-	ipcRenderer.send('request-io-update')
-	ipcRenderer.send('get-folders')
-	ipcRenderer.send('get-status')
-
-	ipcRenderer.on('user-connection', function(event, data) {
+	$scope.mainFolder = $store.mainFolder
+	
+	$ipc.send('request-io-update')
+	$ipc.send('get-folders')
+	$ipc.send('get-status')
+	
+	$ipc.on('user-connection', function(event, data) {
 		$scope.userCount = data.count
 		$scope.$apply()
 	})
-
-	ipcRenderer.on('list-folders', function(event, folders) {
+	
+	$ipc.on('list-folders', function(event, folders) {
 		$scope.folders = folders.reverse()
 		$scope.$apply()
 	})
 	
-	ipcRenderer.on('turned-on', function() {
+	$ipc.on('turned-on', function() {
 		$scope.casting = true
 		$scope.$apply()
 	})
 	
-	ipcRenderer.on('turned-off', function() {
+	$ipc.on('turned-off', function() {
 		$scope.casting = false
 		$scope.$apply()
 	})
 	
-	ipcRenderer.on('listening-status', function(event, listening) {
+	$ipc.on('listening-status', function(event, listening) {
 		$scope.casting = listening
 		$scope.$apply()
 	})
 	
 	$scope.toggleCasting = function() {
 		if($scope.casting) {
-			ipcRenderer.send('turn-off')
+			$ipc.send('turn-off')
 		} else {
-			ipcRenderer.send('turn-on')
+			$ipc.send('turn-on')
 		}
 	}
 
 	$scope.openDialog = function() {
-		ipcRenderer.send('open-file-dialog')
+		$ipc.send('open-file-dialog')
 	}
 	
 	$scope.setFolder = function(folder) {
 		$scope.mainFolder = folder
-		ipcRenderer.send('drop-folder', $scope.mainFolder)
+		$ipc.send('drop-folder', $scope.mainFolder)
 	}
 
-	ipcRenderer.on('selected-directory', function (event, path) {
+	$ipc.on('selected-directory', function (event, path) {
 		if(path) {
 			$scope.mainFolder = path
 			$scope.$apply()
 		}
 		
-		ipcRenderer.send('get-folders')
+		$ipc.send('get-folders')
 	})
 
 	document.ondragover = document.ondrop = function(event) {
@@ -80,6 +78,6 @@ angular.module('app.controllers')
 	document.body.ondrop = function(event) {
 		console.log(event.dataTransfer.files[0].path)
 		event.preventDefault()
-		ipcRenderer.send('drop-folder', event.dataTransfer.files[0].path)
+		$ipc.send('drop-folder', event.dataTransfer.files[0].path)
 	}
 })

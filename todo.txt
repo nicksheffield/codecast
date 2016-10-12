@@ -1,11 +1,9 @@
 Todo
 
 	- Socket doesn't disconnect when you leave, and a new one connects when you go back to viewing
-	- Something weird going on with sizes when code is too wide
 	- Ignore .app files because it treats it like a folder
 	- Ignore .asar files
 	- Add .bowerrc "directory" to live-file-view ignores
 		- not sure if this is working yet
-	- broadcast icon isn't set in the header until the broadcast page is loaded
 	- should be able to clear broadcast folder
 	- not such a bad error when you try to cast a folder that has been moved
