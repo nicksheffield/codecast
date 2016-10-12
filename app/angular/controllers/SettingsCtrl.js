@@ -1,6 +1,7 @@
 angular.module('app.controllers')
 
-.controller('SettingsCtrl', function($scope, $db, $location, $menu) {
+.controller('SettingsCtrl', function($scope, $db, $location, $menu, $ipc, $socket) {
+	$socket.disconnect()
 	$scope.db = $db.state
 	$menu.openInBrowser(false)
 	
@@ -15,4 +16,10 @@ angular.module('app.controllers')
 		
 		$scope.saved = true
 	}
+	
+	$ipc.send('get-package')
+	
+	$ipc.on('got-package', function(event, data) {
+		$scope.package = data
+	})
 })

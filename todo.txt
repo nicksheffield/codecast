@@ -1,9 +1,11 @@
 Todo
 
-	- Socket doesn't disconnect when you leave, and a new one connects when you go back to viewing
 	- Ignore .app files because it treats it like a folder
 	- Ignore .asar files
 	- Add .bowerrc "directory" to live-file-view ignores
 		- not sure if this is working yet
 	- should be able to clear broadcast folder
 	- not such a bad error when you try to cast a folder that has been moved
+	- Better organisation in electron.js and live-file-view.js
+		- maybe refactor them both into the same structure
+	- Two package.json structure

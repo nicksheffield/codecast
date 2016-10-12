@@ -16,7 +16,6 @@ angular.module('app.controllers')
 	$menu.openInBrowser(true)
 	
 	$scope.$watch('currentFile', function(newVal) {
-		console.log('currentFile changed')
 		$menu.currentFile = newVal
 	})
 	
@@ -134,7 +133,6 @@ angular.module('app.controllers')
 		console.log('fschange', data)
 		
 		if($scope.currentFile.path == data.path) {
-			console.log($scope.currentFile.path, data.path, $scope.currentFile.path == data.path)
 			get($scope.currentFile)
 		} else {
 			searchForAndChange(data.path, $scope.files)
@@ -142,6 +140,7 @@ angular.module('app.controllers')
 	})
 	
 	$socket.on('fsupdate', function() {
+		console.log('fsupdate')
 		load()
 	})
 	

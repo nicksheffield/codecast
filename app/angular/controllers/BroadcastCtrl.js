@@ -1,6 +1,7 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $db, $menu, $store, $ipc) {
+.controller('BroadcastCtrl', function($scope, $db, $menu, $store, $ipc, $socket) {
+	$socket.disconnect()
 	$scope.casting = $store.casting
 	$menu.openInBrowser(false)
 	

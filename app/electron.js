@@ -7,6 +7,7 @@ var _             = require('lodash')
 var mkdirp        = require('mkdirp')
 var mainApp       = require('./live-file-view')
 var fs            = require('fs')
+var package       = require('../package.json')
 
 
 // ------------------------------------------------------------
@@ -53,7 +54,7 @@ app.on('ready', function() {
 		height: screen.height - (inset * 2),
 		x: inset,
 		y: inset + 25,
-		titleBarStyle: 'hidden-inset'
+		//titleBarStyle: 'hidden-inset'
 	})
 	
 	// require('devtron').install()
@@ -255,10 +256,13 @@ mainApp.io.on('connection', function(socket) {
 	})
 	
 	socket.on('disconnect', function() {
-		mainWindow.webContents.send('user-connection', {
-			id: socket.id,
-			count: mainApp.io.engine.clientsCount
-		})
+		setTimeout(function() {
+			console.log('disconnected', mainApp.io.engine.clientsCount)
+			mainWindow.webContents.send('user-connection', {
+				id: socket.id,
+				count: mainApp.io.engine.clientsCount
+			})
+		}, 100)
 	})
 })
 
@@ -294,6 +298,10 @@ ipcMain.on('get-status', function(event) {
 	var status = mainApp.listening()
 	
 	event.sender.send('listening-status', status)
+})
+
+ipcMain.on('get-package', function(event) {
+	event.sender.send('got-package', package)
 })
 
 ipcMain.on('request-io-update', function(event) {

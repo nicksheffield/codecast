@@ -12,6 +12,11 @@ angular.module('app.services')
 				service.socket.on(eventName, on[eventName])
 			}
 		},
+		disconnect: function() {
+			if(service.socket) {
+				service.socket.disconnect()
+			}
+		},
 		on: function(eventName, callback) {
 			on[eventName] = callback
 		},

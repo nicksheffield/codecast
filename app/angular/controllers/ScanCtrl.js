@@ -1,6 +1,7 @@
 angular.module('app.controllers')
 
-.controller('ScanCtrl', function($scope, $db, $location, $store, $http, $menu) {
+.controller('ScanCtrl', function($scope, $db, $location, $store, $http, $menu, $socket) {
+	$socket.disconnect()
 	$menu.openInBrowser(false)
 	
 	$scope.username = $db.state.username
@@ -35,7 +36,6 @@ angular.module('app.controllers')
 		 
 		scanner.on('result',function(data) {
 			if(data.status == 'open') {
-				console.log('Open:', data)
 				
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
@@ -52,7 +52,6 @@ angular.module('app.controllers')
 							return data.ip == item.ip
 						})
 						caster.meta = res.data
-						console.log('meta response', res.data)
 					})
 			} else {
 				var found2 = _.find($scope.broadcasters, function(item) {
