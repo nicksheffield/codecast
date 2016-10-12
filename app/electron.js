@@ -60,25 +60,183 @@ app.on('ready', function() {
 	
 	mainWindow.loadURL(`file://${__dirname}/app.html`)
 	
-	// mainWindow.webContents.toggleDevTools()
+	mainWindow.webContents.toggleDevTools()
 	
 	mainWindow.on('closed', function () {
 		mainWindow = null
 	})
 
-	// var template = [
-	// 	{ label: "Copy", accelerator: "CmdOrCtrl+C", role: 'copy' },
-	// 	{ label: "Select All", accelerator: "CmdOrCtrl+A", role: 'selectall' },
-	// 	{
-	// 		label: 'Developer Tools',
-	// 		accelerator: 'Alt+Command+I',
-	// 		click: function(item, focusedWindow) {
-	// 			if(focusedWindow) focusedWindow.webContents.toggleDevTools()
-	// 		}
-	// 	}
-	// ];
+	var template = [
+		{
+			label: 'Edit',
+			submenu: [
+				{
+					role: 'undo'
+				},
+				{
+					role: 'redo'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'cut'
+				},
+				{
+					role: 'copy'
+				},
+				{
+					role: 'paste'
+				},
+				{
+					role: 'pasteandmatchstyle'
+				},
+				{
+					role: 'delete'
+				},
+				{
+					role: 'selectall'
+				}
+			]
+		},
+		{
+			label: 'View',
+			submenu: [
+				{
+					label: 'Reload',
+					accelerator: 'CmdOrCtrl+R',
+					click: function(item, focusedWindow) {
+						if (focusedWindow) focusedWindow.reload()
+					}
+				},
+				{
+					label: 'Toggle Developer Tools',
+					accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+					click: function(item, focusedWindow) {
+						if (focusedWindow) focusedWindow.webContents.toggleDevTools()
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'resetzoom'
+				},
+				{
+					role: 'zoomin'
+				},
+				{
+					role: 'zoomout'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'togglefullscreen'
+				}
+			]
+		},
+		{
+			role: 'window',
+			submenu: [
+				{
+					role: 'minimize'
+				},
+				{
+					role: 'close'
+				}
+			]
+		},
+		{
+			role: 'help',
+			submenu: [
+				{
+					label: 'Learn More',
+					click: function() { require('electron').shell.openExternal('http://electron.atom.io') }
+				}
+			]
+		}
+	]
 
-	// Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+	if (process.platform === 'darwin') {
+		var name = app.getName()
+		template.unshift({
+			label: name,
+			submenu: [
+				{
+					role: 'about'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'services',
+					submenu: []
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'hide'
+				},
+				{
+					role: 'hideothers'
+				},
+				{
+					role: 'unhide'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					role: 'quit'
+				}
+			]
+		})
+		// Edit menu.
+		template[1].submenu.push(
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Speech',
+				submenu: [
+					{
+						role: 'startspeaking'
+					},
+					{
+						role: 'stopspeaking'
+					}
+				]
+			}
+		)
+		// Window menu.
+		template[3].submenu = [
+			{
+				label: 'Close',
+				accelerator: 'CmdOrCtrl+W',
+				role: 'close'
+			},
+			{
+				label: 'Minimize',
+				accelerator: 'CmdOrCtrl+M',
+				role: 'minimize'
+			},
+			{
+				label: 'Zoom',
+				role: 'zoom'
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Bring All to Front',
+				role: 'front'
+			}
+		]
+	}
+
+	Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 })
 
 app.on('window-all-closed', function() {
