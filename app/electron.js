@@ -60,7 +60,7 @@ app.on('ready', function() {
 	
 	mainWindow.loadURL(`file://${__dirname}/app.html`)
 	
-	mainWindow.webContents.toggleDevTools()
+	// mainWindow.webContents.toggleDevTools()
 	
 	mainWindow.on('closed', function () {
 		mainWindow = null

@@ -1,6 +1,6 @@
 angular.module('app.directives')
 
-.directive('resizer', function($document) {
+.directive('resizer', function($document, $timeout) {
 
 	// http://stackoverflow.com/questions/18368485/angular-js-resizable-div-directive
 
@@ -29,6 +29,11 @@ angular.module('app.directives')
 				width: (window.innerWidth - 6 - x) + 'px'
 			})
 		}
+		
+		$timeout(function() {
+			if(localX) setX(localX)
+			else setX(250)
+		}, 100)
 
 		$element.on('mousedown', function(event) {
 			event.preventDefault()
