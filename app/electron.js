@@ -3,7 +3,6 @@
 // ------------------------------------------------------------
 var electron      = require('electron')
 var _             = require('lodash')
-var mkdirp        = require('mkdirp')
 var mainApp       = require('./live-file-view')
 var fs            = require('fs')
 var package       = require('../package.json')
