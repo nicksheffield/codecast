@@ -9,11 +9,6 @@
 				<i class="fa fa-eye"></i>
 				{{ userCount }}
 			</span>
-			
-			<button class="btn btn-info" ng-click="openDialog()">
-				<i class="fa fa-folder-open"></i>
-				Browse
-			</button>
 	
 			<button class="btn btn-icon" ng-class="{'btn-normal': !casting, 'btn-success': casting}" ng-click="toggleCasting()">
 				<i ng-if="casting" class="fa fa-fw fa-toggle-on"></i>
@@ -32,7 +27,15 @@
 					<span class="pre">{{ mainFolder.preReadable }}</span><span class="name">{{ mainFolder.name }}</span>
 				</span>
 			</div>
-			<button class="btn btn-sm btn-warning" ng-click="clear()"><i class="fa fa-times"></i></button>
+			<div>
+				<button class="btn btn-normal btn-sm" ng-click="openDialog()">
+					<i class="fa fa-folder-open"></i>
+					Browse
+				</button>
+				
+				<button class="btn btn-sm btn-normal" ng-click="clear()"><i class="fa fa-times"></i></button>
+			</div>
+			
 		</div>
 		
 		<hr>
@@ -40,7 +43,7 @@
 		<div layout="row" layout="row" align="center" justify="between">
 			<h2>History</h2>
 			
-			<button class="btn btn-sm btn-warning" ng-click="clearHistory()">Clear</button>
+			<button class="btn btn-sm btn-normal" ng-click="clearHistory()">Clear</button>
 		</div>
 		
 		<ul class="history">

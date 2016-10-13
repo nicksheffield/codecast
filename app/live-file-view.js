@@ -12,6 +12,7 @@ var io          = require('socket.io')(http)
 var chokidar    = require('chokidar')
 var bodyParser  = require('body-parser')
 var path        = require('path')
+var minimatch   = require('minimatch')
 var Config      = require('electron-config')
 var config      = new Config()
 
@@ -23,6 +24,7 @@ var fileServer = require('http').Server(fileApp)
 // ------------------------------------------------------------
 //   Default ignored folders and files
 // ------------------------------------------------------------
+// These ignores are for every folder
 var defaultIgnore = [
 	'.DS_Store',
 	'node_modules/',
@@ -31,9 +33,17 @@ var defaultIgnore = [
 	'storage/',
 	'.git/',
 	'sftp_config.json',
-	'project.sublime-workspace'
+	'project.sublime-workspace',
+	'*.app',
+	'*.asar',
+	'*.zip',
+	'*.exe',
+	'.DSStore',
+	'thumbs.db',
+	'*.icns'
 ]
 
+// These ignores are set up per folder
 var otherIgnore = []
 
 function allIgnores() {
@@ -212,8 +222,18 @@ function findFiles(folder) {
 			thing.name = name
 			thing.shortpath = thing.path.replace(mainFolder.path, '')
 			
-			if(allIgnores().indexOf(thing.shortpath) !== -1) {
-				return
+			// if(allIgnores().indexOf(thing.shortpath) !== -1) {
+			// 	return
+			// }
+		
+			for(var j=0; j<allIgnores().length; j++) {
+				var pattern = allIgnores()[j]
+				
+				var match = minimatch(thing.shortpath, pattern, {matchBase: true})
+				
+				if(match) {
+					return
+				}
 			}
 			
 			if(thing.type == 'file') {

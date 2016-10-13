@@ -5,7 +5,7 @@
 		<h1>Settings</h1>
 		
 		<div>
-			<button class="btn btn-icon" ng-click="save()" ng-class="{'btn-primary': !saved, 'btn-success': saved}">
+			<button class="btn btn-icon" ng-click="save()" ng-class="{'btn-normal': !saved, 'btn-success': saved}">
 				<i class="fa fa-floppy-o fa-fw" ng-if="!saved"></i>
 				<i class="fa fa-check fa-fw" ng-if="saved"></i>
 				Save
@@ -19,6 +19,9 @@
 			<input type="text" ng-model="username" id="username" class="form-control">
 		</div>
 		
-		<p><strong>Version: {{ package.version }}</strong></p>
+		<div class="form-group">
+			<label for="colorscheme">Color Scheme</label>
+			<select id="colorscheme" ng-model="colorscheme" ng-options="item.name for item in colorschemes" class="form-control"></select>
+		</div>
 	</div>
 </div>
