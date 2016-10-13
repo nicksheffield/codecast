@@ -58,7 +58,7 @@ angular.module('app.controllers')
 		})
 		 
 		scanner.on('error',function(err) {
-			throw new Error(data.toString())
+			throw new Error(err.toString())
 		})
 		 
 		scanner.on('done',function() {

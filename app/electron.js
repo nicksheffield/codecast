@@ -312,7 +312,9 @@ ipcMain.on('open-file-dialog', function(event) {
 	var window = BrowserWindow.fromWebContents(event.sender)
 	var files = dialog.showOpenDialog(window, { properties: [ 'openDirectory' ]})
 	
-	setFolder(event, files[0] + '/')
+	if(files) {
+		setFolder(event, files[0] + '/')
+	}
 })
 
 ipcMain.on('drop-folder', function(event, path) {
