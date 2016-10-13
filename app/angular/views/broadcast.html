@@ -26,9 +26,11 @@
 	<div class="page-content">
 		
 		<div layout="row" align="center" justify="between">
-			<div layout="row">
-				<strong>Current folder</strong>
-				<span class="current-folder">{{ mainFolder }}</span>
+			<div layout="row" align="center">
+				<strong ng-show="mainFolder">Current folder</strong>
+				<span class="current-folder folder-name" ng-show="mainFolder">
+					<span class="pre">{{ mainFolder.preReadable }}</span><span class="name">{{ mainFolder.name }}</span>
+				</span>
 			</div>
 			<button class="btn btn-sm btn-warning" ng-click="clear()"><i class="fa fa-times"></i></button>
 		</div>
@@ -43,7 +45,9 @@
 		
 		<ul class="history">
 			<li class="folder" ng-repeat="folder in folders" ng-click="setFolder(folder)">
-				{{ folder }}
+				<span class="folder-name">
+					<span class="pre">{{ folder.preReadable }}</span><span class="name">{{ folder.name }}</span>
+				</span>
 			</li>
 		</ul>
 

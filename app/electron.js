@@ -320,20 +320,29 @@ ipcMain.on('drop-folder', function(event, path) {
 })
 
 function setFolder(event, path) {
-	if(mainApp.setFolder(path)) {
+	
+	path = path.replace(/\/$/, '') + '/'
+	
+	var splitted = path.split('/')
+	
+	var folder = {
+		name: splitted[splitted.length-2],
+		path: path,
+		pathReadable: path.replace(app.getPath('home'), '~'),
+		pre: splitted.slice(0, splitted.length-2).join('/') + '/',
+		preReadable: (splitted.slice(0, splitted.length-2).join('/') + '/').replace(app.getPath('home'), '~')
+	}
+	
+	if(mainApp.setFolder(folder)) {
 		
-		event.sender.send('selected-directory', path)
+		event.sender.send('selected-directory', folder)
 		
 		var history = config.get('history')
 		
-		history = _.reject(history, (folder) => folder == path)
+		history = _.reject(history, (f) => f.path == path)
 		
-		history.unshift(path)
+		history.unshift(folder)
 		
 		config.set('history', history)
 	}
 }
-
-// ipcMain.on('get-folders', function(event) {
-// 	event.sender.send('list-folders', config.get('history'))
-// })

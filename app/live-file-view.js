@@ -49,14 +49,14 @@ var mainFolder = ''
 function setFolder(folder) {
 	if(!folder) return false
 
-	var stat = fs.lstatSync(folder)
+	var stat = fs.lstatSync(folder.path)
 	
 	if(!stat.isDirectory()) return false
 	
 	mainFolder = folder
 	config.set('currentFolder', mainFolder)
 	
-	console.log('mainFolder chosen:', mainFolder)
+	console.log('mainFolder chosen:', mainFolder.readable)
 	
 	io.emit('fsupdate')
 	
@@ -65,8 +65,8 @@ function setFolder(folder) {
 	// ------------------------------------------------------------
 	//   Bower ignore
 	// ------------------------------------------------------------
-	if(fs.existsSync(mainFolder + '.bowerrc')) {
-		var bowerrc = JSON.parse(fs.readFileSync(mainFolder + '.bowerrc', "utf8"))
+	if(fs.existsSync(mainFolder.path + '.bowerrc')) {
+		var bowerrc = JSON.parse(fs.readFileSync(mainFolder.path + '.bowerrc', "utf8"))
 		
 		if(bowerrc.directory) otherIgnore.push(bowerrc.directory)
 	}
@@ -81,17 +81,17 @@ function setFolder(folder) {
 		})
 	}
 	
-	fileApp.use(express.static(mainFolder))
+	fileApp.use(express.static(mainFolder.path))
 	
 
 	// ------------------------------------------------------------
 	//   Load sublime-project files
 	// ------------------------------------------------------------
-	var rootFiles = fs.readdirSync(mainFolder)
+	var rootFiles = fs.readdirSync(mainFolder.path)
 
 	_.forEach(rootFiles, function(file) {
 		if(sublimeProjectPattern.test(file)) {
-			sublimeProject = JSON.parse(fs.readFileSync(mainFolder + file, "utf8"))
+			sublimeProject = JSON.parse(fs.readFileSync(mainFolder.path + file, "utf8"))
 		}
 	})
 
@@ -99,7 +99,7 @@ function setFolder(folder) {
 	// ------------------------------------------------------------
 	//   FS Events
 	// ------------------------------------------------------------
-	var watcher = chokidar.watch(mainFolder, {ignored: allIgnores().map((str) => mainFolder+str), ignoreInitial: true})
+	var watcher = chokidar.watch(mainFolder.path, {ignored: allIgnores().map((str) => mainFolder.path+str), ignoreInitial: true})
 
 	watcher.on('all', (event, path) => {
 		// console.log('chokidar', event, path)
@@ -107,7 +107,7 @@ function setFolder(folder) {
 		var simplePath = path
 		var filename = simplePath.split('/')[simplePath.split('/').length-1]
 		
-		if(sublimeProjectPattern.test(simplePath.replace(mainFolder, ''))) {
+		if(sublimeProjectPattern.test(simplePath.replace(mainFolder.path, ''))) {
 			sublimeProject = JSON.parse(fs.readFileSync(path, "utf8"))
 			io.emit('fsupdate')
 		}
@@ -169,13 +169,13 @@ exapp.use(bodyParser.urlencoded({ extended: true }))
 // ------------------------------------------------------------
 exapp.get('/api/files', function(req, res) {
 	if(mainFolder) {
-		var files = findFiles({path: mainFolder})
+		var files = findFiles({path: mainFolder.path})
 		
 		files = [
 			{
 				type: 'directory',
-				path: mainFolder,
-				name: mainFolder.split('/')[mainFolder.split('/').length-2] + '/',
+				path: mainFolder.path,
+				name: mainFolder.name + '/',
 				shortpath: '/',
 				files: files
 			}
@@ -210,7 +210,7 @@ function findFiles(folder) {
 			thing.type = stat.isFile() ? 'file' : 'directory'
 			thing.path = folder.path + name
 			thing.name = name
-			thing.shortpath = thing.path.replace(mainFolder, '')
+			thing.shortpath = thing.path.replace(mainFolder.path, '')
 			
 			if(allIgnores().indexOf(thing.shortpath) !== -1) {
 				return
@@ -273,7 +273,12 @@ module.exports = {
 	express: exapp,
 	setFolder: setFolder,
 	clearFolder: function() {
-		mainFolder = ''
+		mainFolder = {
+			path: '',
+			readable: '',
+			pre: '',
+			name: ''
+		}
 		
 		io.emit('fsupdate')
 	},

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('BroadcastCtrl', function($scope, $config, $menu, $store, $ipc, $socket, $timeout) {
+.controller('BroadcastCtrl', function($scope, $config, $menu, $store, $ipc, $socket, $timeout, $remote) {
 	$socket.disconnect()
 	$scope.casting = $store.casting
 	$menu.openInBrowser(false)
@@ -49,7 +49,7 @@ angular.module('app.controllers')
 	
 	$scope.setFolder = function(folder) {
 		$scope.mainFolder = folder
-		$ipc.send('drop-folder', $scope.mainFolder)
+		$ipc.send('drop-folder', $scope.mainFolder.path)
 	}
 	
 	$scope.clear = function() {
@@ -64,10 +64,14 @@ angular.module('app.controllers')
 		
 		$scope.folders = []
 	}
+	
+	$scope.squiggle = function(str) {
+		return str.replace($remote.app.getPath('home'), '~')
+	}
 
-	$ipc.on('selected-directory', function (event, path) {
-		if(path) {
-			$scope.mainFolder = path
+	$ipc.on('selected-directory', function (event, folder) {
+		if(folder) {
+			$scope.mainFolder = folder
 			$scope.$apply()
 		}
 		

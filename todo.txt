@@ -6,6 +6,9 @@ Todo
 			- oh shit, maybe move live-file-view stuff into the renderer?
 	- Two package.json structure
 	- Move away from bower
+		- Take a real look at browserify
 	- Use glob based ignoring
 		- Ignore .app files because it treats it like a folder
 		- Ignore .asar files
+	- Squiggle paths on the view page
+	- Fork evilscan or something and take geoip out
