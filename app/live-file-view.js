@@ -56,7 +56,7 @@ function setFolder(folder) {
 	mainFolder = folder
 	config.set('currentFolder', mainFolder)
 	
-	console.log('mainFolder chosen:', mainFolder.readable)
+	console.log('mainFolder chosen:', mainFolder.pathReadable)
 	
 	io.emit('fsupdate')
 	
