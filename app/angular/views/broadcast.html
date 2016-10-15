@@ -5,12 +5,12 @@
 		<h1>Broadcast</h1>
 		
 		<div>
-			<span class="btn">
+			<span class="btn btn-disabled">
 				<i class="fa fa-eye"></i>
 				{{ userCount }}
 			</span>
 	
-			<button class="btn btn-icon" ng-class="{'btn-normal': !casting, 'btn-success': casting}" ng-click="toggleCasting()">
+			<button class="btn btn-icon" ng-class="{'btn-normal': !casting, 'btn-on': casting}" ng-click="toggleCasting()">
 				<i ng-if="casting" class="fa fa-fw fa-toggle-on"></i>
 				<i ng-if="!casting" class="fa fa-fw fa-toggle-off"></i>
 				Cast
@@ -22,7 +22,7 @@
 		
 		<div layout="row" align="center" justify="between">
 			<div layout="row" align="center">
-				<strong ng-show="mainFolder">Current folder</strong>
+				<strong>Current folder</strong>
 				<span class="current-folder folder-name" ng-show="mainFolder">
 					<span class="pre">{{ mainFolder.preReadable }}</span><span class="name">{{ mainFolder.name }}</span>
 				</span>
