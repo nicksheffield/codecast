@@ -26,20 +26,19 @@ var fileServer = require('http').Server(fileApp)
 // ------------------------------------------------------------
 // These ignores are for every folder
 var defaultIgnore = [
-	'.DS_Store',
-	'node_modules/',
-	'bower_components/',
-	'vendor/',
-	'storage/',
-	'.git/',
+	'node_modules',
+	'bower_components',
+	'vendor',
+	'storage',
+	'.git',
 	'sftp_config.json',
 	'project.sublime-workspace',
+	'thumbs.db',
+	'.DS_Store',
 	'*.app',
 	'*.asar',
 	'*.zip',
 	'*.exe',
-	'.DSStore',
-	'thumbs.db',
 	'*.icns'
 ]
 

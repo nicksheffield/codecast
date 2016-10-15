@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('$config', function($remote) {
+.factory('$config', function() {
 	var Config = require('electron-config')
 	
 	var service = {
