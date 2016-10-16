@@ -2,7 +2,6 @@
 	padding 1em 0 0
 	margin 0
 	width sidebar-width
-	background navbg
 	font-size 0.8em
 	overflow-y auto
 	overflow-x hidden
@@ -14,12 +13,6 @@
 	
 	ul
 		padding 0
-		
-	.directory .name
-		color directory
-		
-	.file .name
-		color file
 	
 	.name
 		display block
@@ -31,9 +24,6 @@
 		position relative
 		z-index 2
 		transition transition-speed
-		
-		i.fa
-			color icon-color
 			
 		&:before, &:after
 			position absolute
@@ -49,37 +39,6 @@
 		&:after
 			right auto
 			left 100%
-		
-		&:hover
-			background mouseover
-			
-			i.fa
-				color icon-hover
-			
-			&:before, &:after
-				background mouseover
-		
-		&.current
-			// border-left-color highlight
-			color selected-file
-			background selected-bg
-			
-			i.fa
-				color icon-current
-			
-			&:before, &:after
-				background selected-bg
-		
-		&.changed
-			animation glow 1s infinite
-			color changed-color
-			background changed-bg
-		
-			i.fa
-				color changed-icon
-			
-			&:before, &:after
-				background changed-bg
 	
 	li
 		border-radius 3px

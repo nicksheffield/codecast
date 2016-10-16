@@ -25,6 +25,11 @@
 		</div>
 		
 		<div class="form-group">
+			<label for="lightmode">Code Viewer Theme</label>
+			<select id="lightmode" ng-model="lightmode" ng-options="item.name for item in lightmodes" class="form-control"></select>
+		</div>
+		
+		<div class="form-group">
 			<label for="colortheme">Syntax Highlighting Theme</label>
 			<select id="colortheme" ng-model="colortheme" ng-options="item.name for item in colorthemes" class="form-control"></select>
 		</div>

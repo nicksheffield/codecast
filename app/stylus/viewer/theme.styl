@@ -1,0 +1,152 @@
+.viewer-dark
+	background #272822
+	color #fff
+	
+	.no-file-chosen
+		color rgba(255, 255, 255, 0.1)
+		
+	.file-nav
+		background navbg
+	
+		.directory .name
+			color directory
+			
+		.file .name
+			color file
+			
+		.name
+			i.fa
+				color directory
+			
+			&:hover
+				background mouseover
+				
+				i.fa
+					color icon-hover
+				
+				&:before, &:after
+					background mouseover
+			
+			&.current
+				color selected-file
+				background selected-bg
+				
+				i.fa
+					color icon-current
+				
+				&:before, &:after
+					background selected-bg
+			
+			&.changed
+				animation glow 1s infinite
+				color changed-color
+			
+				i.fa
+					color changed-color
+					
+	#sidebar-resizer
+		background-color navbg
+		
+	.tabs
+		background navbg
+		
+		.tab
+			color rgba(255, 255, 255, 0.5)
+			
+			&:hover
+				background lighten(navbg, 5%)
+				
+			&.current
+				color tab-current-color
+				border-bottom-color tab-current-color
+				
+			&.changed
+				color changed-color
+				animation glow 1s infinite
+				
+			.close-btn
+				i.fa
+					color tab-close-icon
+					text-shadow 0 0 10px tab-close-glow
+					
+				&:hover
+					
+					i.fa
+						color tab-close-hover
+			
+	
+.viewer-light
+	background #fff
+	color #000
+	
+	.no-file-chosen
+		color rgba(0, 0, 0, 0.1)
+		
+	.file-nav
+		background #f5f5f5
+	
+		.directory .name
+			color #FFF - directory
+			
+		.file .name
+			color #FFF - file
+			
+		.name
+			i.fa
+				color #FFF - directory
+			
+			&:hover
+				background #FFF - mouseover
+				
+				i.fa
+					color #FFF - icon-hover
+				
+				&:before, &:after
+					background #FFF - mouseover
+			
+			&.current
+				color #FFF - selected-file
+				background #FFF - selected-bg
+				
+				i.fa
+					color #FFF - icon-current
+				
+				&:before, &:after
+					background #FFF - selected-bg
+			
+			&.changed
+				animation light-glow 1s infinite
+				color light-changed-color
+			
+				i.fa
+					color light-changed-color
+					
+	#sidebar-resizer
+		background-color #f5f5f5
+		
+	.tabs
+		background #f5f5f5
+		
+		.tab
+			color rgba(0, 0, 0, 0.5)
+			
+			&:hover
+				background lighten(#f5f5f5, 5%)
+				
+			&.current
+				color #FFF - tab-current-color
+				border-bottom-color #FFF - tab-current-color
+				
+			&.changed
+				color light-changed-color
+				animation glow 1s infinite
+				
+			.close-btn
+				i.fa
+					color #FFF - tab-close-icon
+					text-shadow 0 0 10px #FFF - tab-close-glow
+					
+				&:hover
+					
+					i.fa
+						color tab-close-hover

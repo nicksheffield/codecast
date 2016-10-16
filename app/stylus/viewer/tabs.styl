@@ -1,5 +1,4 @@
 .tabs
-	background navbg
 	font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
 	user-select none
 	min-height 40px
@@ -13,7 +12,6 @@
 		overflow hidden
 		// box-shadow 1px 0 0 lighten(navbg, 15%)
 		cursor pointer
-		color rgba(255, 255, 255, 0.5)
 		position relative
 		white-space nowrap
 		border-bottom 2px solid rgba(0, 0, 0, 0)
@@ -22,19 +20,9 @@
 		flex 1
 		
 		&:hover
-			background lighten(navbg, 5%)
-			
-		&.current
-			color #fff
-			border-bottom-color #fff
-		
-		&:hover
 			.close-btn
 				transform scale(1)
 		
-		&.changed
-			color changed-color
-			animation glow 1s infinite
 			
 		.close-btn
 			transform scale(0)
@@ -48,13 +36,8 @@
 			padding 0
 			
 			i.fa
-				color #fff
-				text-shadow 0 0 10px #000
 				font-size 1.5em
 				transition color 0.1s ease
 			
 			&:hover
 				cursor pointer
-				
-				i.fa
-					color #d00

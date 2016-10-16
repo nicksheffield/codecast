@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket, $remote, $menu) {
+.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket, $remote, $menu, $config) {
 	$scope.currentFile = {}
 	$scope.fileContent = ''
 	$scope.syntax = ''
@@ -8,6 +8,7 @@ angular.module('app.controllers')
 	$scope.changed = []
 	$scope.opened = []
 	$scope.openFiles = []
+	$scope.lightmode = $config.get('lightmode')
 	
 	var ip = $routeParams.ip
 	var host = 'http://' + ip + ':3000'

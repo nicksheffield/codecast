@@ -2,7 +2,7 @@
 	
 	<div ng-include="'angular/views/header.html'"></div>
 	
-	<div class="viewer wrapper" layout="row" ratio="1">
+	<div class="viewer wrapper" ng-class="{'viewer-dark': !lightmode, 'viewer-light': lightmode}" layout="row" ratio="1">
 
 		<ul class="file-nav" id="nav">
 			<li ng-repeat="file in files" ng-class="{file: file.type == 'file', directory: file.type == 'directory'}">

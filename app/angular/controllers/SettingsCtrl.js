@@ -12,6 +12,7 @@ angular.module('app.controllers')
 		$config.set('username', $scope.username)
 		$config.set('colorscheme', $scope.colorscheme)
 		$config.set('colortheme', $scope.colortheme)
+		$config.set('lightmode', $scope.lightmode.name == 'Light')
 		
 		$rootScope.colorscheme = $scope.colorscheme.style
 		$rootScope.colortheme = $scope.colortheme.style
@@ -27,5 +28,13 @@ angular.module('app.controllers')
 	
 	$scope.colortheme = $colorthemes.current
 	$scope.colorthemes = $colorthemes.themes
+	
+	$scope.lightmodes = [{name: 'Dark'}, {name: 'Light'}]
+	
+	if($config.get('lightmode')) {
+		$scope.lightmode = $scope.lightmodes[1]
+	} else {
+		$scope.lightmode = $scope.lightmodes[0]
+	}
 
 })
