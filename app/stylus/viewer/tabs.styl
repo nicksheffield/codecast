@@ -5,13 +5,13 @@
 	min-height 40px
 	
 	.tab
-		max-width 30%
+		max-width 200px
 		padding 0 3.5em 0 2em
 		height 40px
 		line-height 40px
 		font-size 0.8em
 		overflow hidden
-		box-shadow 1px 0 0 lighten(navbg, 15%)
+		// box-shadow 1px 0 0 lighten(navbg, 15%)
 		cursor pointer
 		color rgba(255, 255, 255, 0.5)
 		position relative
@@ -19,9 +19,7 @@
 		border-bottom 2px solid rgba(0, 0, 0, 0)
 		transition background 0.2s
 		line-height normal
-		
-		&:last-child
-			box-shadow none
+		flex 1
 		
 		&:hover
 			background lighten(navbg, 5%)

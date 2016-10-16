@@ -6,6 +6,11 @@ angular.module('app.services')
 		themes: [
 			{ name: 'Okaidia', style: 'components/prism/themes/prism-okaidia.css' },
 			{ name: 'Atom One Dark', style: 'assets/prism-atom-one-dark.css' },
+			{ name: 'Dark', style: 'components/prism/themes/prism-dark.css' },
+			{ name: 'Funky', style: 'components/prism/themes/prism-funky.css' },
+			{ name: 'Solarized Light', style: 'components/prism/themes/prism-solarizedlight.css' },
+			{ name: 'Tomorrow', style: 'components/prism/themes/prism-tomorrow.css' },
+			{ name: 'Twilight', style: 'components/prism/themes/prism-twilight.css' },
 		]
 	}
 	
