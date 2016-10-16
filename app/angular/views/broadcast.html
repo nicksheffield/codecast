@@ -11,9 +11,8 @@
 			</span>
 	
 			<button class="btn btn-icon" ng-class="{'btn-normal': !casting, 'btn-on': casting}" ng-click="toggleCasting()">
-				<i ng-if="casting" class="fa fa-fw fa-toggle-on"></i>
-				<i ng-if="!casting" class="fa fa-fw fa-toggle-off"></i>
-				Cast
+				<span ng-if="casting"><i class="fa fa-fw fa-toggle-on"></i> Casting on</span>
+				<span ng-if="!casting"><i class="fa fa-fw fa-toggle-off"></i> Casting off</span>
 			</button>
 		</div>
 	</div>

@@ -13,7 +13,7 @@
 		<div class="content" id="content" ratio="1" layout="col">
 
 			<div class="tabs" layout="row">
-				<div class="tab" ng-repeat="file in openFiles" ng-click="choose(file, $event)" ng-class="{current: currentFile.path == file.path, changed: changingFuncs.isChanged(file)}" ratio="1" layout="row" align="center">
+				<div class="tab" ng-repeat="file in openFiles" ng-click="choose(file, $event)" ng-class="{current: currentFile.path == file.path, changed: changingFuncs.isChanged(file)}" layout="row" align="center">
 					<span class="filename">
 						{{ file.name }}
 					</span>

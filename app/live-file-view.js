@@ -79,6 +79,8 @@ function setFolder(folder) {
 		
 		if(bowerrc.directory) otherIgnore.push(bowerrc.directory)
 	}
+
+	// .ccignore
 	
 	// ------------------------------------------------------------
 	//   Set Express Static Middleware
