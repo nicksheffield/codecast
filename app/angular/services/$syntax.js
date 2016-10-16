@@ -2,18 +2,19 @@ angular.module('app.services')
 
 .factory('$syntax', function() {
 	var types = {
-		'css':  'css',
-		'html': 'markup',
-		'js':   'javascript',
-		'php':  'php',
-		'sql':  'sql',
-		'md':   'markdown',
-		'sh':   'bash',
-		'styl': 'stylus',
-		'scss': 'sass',
-		'sass': 'sass',
-		'less': 'less',
-		'json': 'javascript'
+		'css':     'css',
+		'html':    'markup',
+		'js':      'javascript',
+		'php':     'php',
+		'sql':     'sql',
+		'md':      'markdown',
+		'sh':      'bash',
+		'styl':    'stylus',
+		'scss':    'sass',
+		'sass':    'sass',
+		'less':    'less',
+		'json':    'javascript',
+		'bowerrc': 'javascript'
 	}
 
 	var service = function(filename) {
