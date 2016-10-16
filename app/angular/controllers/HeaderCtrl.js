@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('HeaderCtrl', function($scope, $location, $store, $ipc, $package, $colorschemes) {
+.controller('HeaderCtrl', function($scope, $location, $store, $ipc, $package, $colorschemes, $colorthemes) {
 	$scope.current = $location.path()
 	
 	$scope.package = $package

@@ -2,6 +2,7 @@ angular.module('app.services')
 
 .factory('$config', function() {
 	var Config = require('electron-config')
+	var config = new Config()
 	
 	var service = {
 		get: function(name) {
@@ -9,7 +10,6 @@ angular.module('app.services')
 			return config.get(name)
 		},
 		set: function(name, val) {
-			var config = new Config()
 			return config.set(name, val)
 		}
 	}

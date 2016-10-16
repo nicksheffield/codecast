@@ -2,7 +2,7 @@ angular.module('app.services')
 
 .factory('$colorschemes', function($rootScope, $config, $timeout) {
 	var service = {
-		current: {},
+		current: null,
 		schemes: [
 			{ name: 'Default', style: 'color-default' },
 			{ name: 'Orange', style: 'color-orange' },
@@ -23,6 +23,10 @@ angular.module('app.services')
 		$timeout(function() {
 			$rootScope.$digest()
 		}, 0)
+	} else {
+		service.current = service.schemes[0]
+		$config.set('colorscheme', service.current)
+		$rootScope.$digest()
 	}
 	
 	return service
