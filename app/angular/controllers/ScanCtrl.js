@@ -11,7 +11,6 @@ angular.module('app.controllers')
 	$scope.scan = function() {
 		var evilscan = require('evilscan')
 		var ip = require('ip')
-		console.log('ip is', ip.address())
 		 
 		var address = ip.address().split('.')
 		 
@@ -40,6 +39,7 @@ angular.module('app.controllers')
 				// get meta
 				$http.get('http://' + data.ip + ':3000/api/meta')
 					.then(function(res) {
+						console.log('meta', res)
 						var caster = _.find($scope.broadcasters, function(item) {
 							return data.ip == item.ip
 						})

@@ -13,14 +13,14 @@
 	
 	<div class="page-content">
 		<ul class="broadcasters">
-			<li ng-repeat="caster in broadcasters" class="broadcaster">
+			<li ng-repeat="caster in broadcasters | filter: {meta: {broadcasting: true}} as filtered" class="broadcaster">
 				<a href="#/view/{{ caster.ip }}" layout="row" align="center">
 					<div layout="col" ratio="1">
 						<div class="username">
 							{{ caster.meta.username }}
 						</div>
 						<div class="folder">
-							{{ caster.meta.mainFolder.pathReadable }}
+							{{ caster.meta.currentFolder.pathReadable }}
 						</div>
 					</div>
 					<div class="ip">
@@ -29,11 +29,11 @@
 				</a>
 			</li>
 			
-			<li ng-if="!broadcasters.length && !scanning">
+			<li ng-if="!filtered.length && !scanning">
 				No broadcasters were found
 			</li>
 			
-			<li ng-if="!broadcasters.length && scanning">
+			<li ng-if="!filtered.length && scanning">
 				Scanning...
 			</li>
 		</ul>

@@ -1,9 +1,9 @@
 angular.module('app.services')
 
-.factory('$menu', function($remote) {
-	
-	var shell = require('electron').shell
-	var Menu = require('electron').remote.Menu
+// https://github.com/electron/electron/blob/master/docs/api/menu.md
+// https://github.com/electron/electron/blob/master/docs/api/menu-item.md
+.factory('$menu', function($remote, $shell) {
+	var Menu = $remote.Menu
 	var MenuItem = $remote.MenuItem
 	
 	var menu = Menu.getApplicationMenu()
@@ -19,7 +19,7 @@ angular.module('app.services')
 	
 	var item = new MenuItem({label: 'Open in Browser', click: function() {
 		if(service.currentFile) {
-			shell.openExternal('http://' + service.ip + ':3333/' + service.currentFile.shortpath)
+			$shell.openExternal('http://' + service.ip + ':3333/' + service.currentFile.shortpath)
 		}
 	}})
 	
