@@ -11,6 +11,7 @@ angular.module('app.controllers')
 	$scope.scan = function() {
 		var evilscan = require('evilscan')
 		var ip = require('ip')
+		console.log('ip is', ip.address())
 		 
 		var address = ip.address().split('.')
 		 
@@ -26,8 +27,8 @@ angular.module('app.controllers')
 		var scanner = new evilscan(options)
 		 
 		scanner.on('result',function(data) {
+
 			if(data.status == 'open') {
-				
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
