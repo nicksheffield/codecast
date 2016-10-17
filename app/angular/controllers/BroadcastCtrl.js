@@ -48,8 +48,15 @@ angular.module('app.controllers')
 	}
 	
 	$scope.setFolder = function(folder) {
-		$scope.mainFolder = folder
-		$ipc.send('drop-folder', $scope.mainFolder.path)
+		// $scope.mainFolder = folder
+		if(require('fs').existsSync(folder.path)) {
+			$ipc.send('drop-folder', folder.path)
+		} else {
+			$ipc.send('open-error-dialog', {
+				title: 'Folder not found',
+				message: 'That folder has either been deleted or moved.'
+			})
+		}
 	}
 	
 	$scope.clear = function() {

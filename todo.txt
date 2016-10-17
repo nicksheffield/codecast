@@ -1,10 +1,5 @@
 Todo
 
-	- not such a bad error when you try to cast a folder that has been moved
 	- Better organisation in electron.js and live-file-view.js
 		- maybe refactor them both into the same structure
 			- oh shit, maybe move live-file-view stuff into the renderer?
-	- Use glob based ignoring
-		- Ignore .app files because it treats it like a folder
-		- Ignore .asar files
-	- Fork evilscan or something and take geoip out

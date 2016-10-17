@@ -304,6 +304,10 @@ ipcMain.on('request-io-update', function(event) {
 	})
 })
 
+ipcMain.on('open-error-dialog', function (event, data) {
+	dialog.showErrorBox(data.title, data.message)
+})
+
 ipcMain.on('clear-folder', function(event, path) {
 	mainApp.clearFolder()
 })
