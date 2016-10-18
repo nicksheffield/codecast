@@ -5,10 +5,8 @@
 		<h1>Broadcasters</h1>
 		
 		<button class="btn btn-normal btn-icon btn-scan" ng-class="{'btn-scanning': scanning}" ng-click="scan()">
-			<span class="scan-progress" style="width: {{ scanProgress }}%"></span>
-			<i class="fa fa-fw fa-refresh fa-spin" ng-show="scanning"></i>
-			<i class="fa fa-fw fa-feed" ng-show="!scanning"></i>
-			<span class="text" ng-show="!scanning">Scan</span>
+			<span class="text" ng-show="scanning"><i class="fa fa-fw fa-refresh fa-spin"></i> Scanning</span>
+			<span class="text" ng-show="!scanning"><i class="fa fa-fw fa-feed"></i> Scan</span>
 		</button>
 	</div>
 	

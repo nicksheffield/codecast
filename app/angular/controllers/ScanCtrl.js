@@ -19,9 +19,12 @@ angular.module('app.controllers')
 		
 		address.pop()
 		
+		var port = 3000
+		var distance = 0
+		
 		var options = {
 			target: address.join('.') + '.0/24',
-			port: '3000-3005',
+			port: port + '-' + (port + distance),
 			status: 'TROU', // Timeout, Refused, Open, Unreachable
 			banner: true
 		}
@@ -29,12 +32,6 @@ angular.module('app.controllers')
 		var scanner = new evilscan(options)
 		
 		scanner.on('result',function(data) {
-			$scope.scanned++
-			
-			var max = 255 * 5 // 5 is the difference between 3000 and 3005, up above in the options.port
-			
-			$scope.scanProgress = 100 / max * $scope.scanned
-			$scope.$apply()
 
 			if(data.status == 'open') {
 				var found = _.find($scope.broadcasters, function(item) {
@@ -74,11 +71,9 @@ angular.module('app.controllers')
 		scanner.on('done',function() {
 			// finished!
 			$scope.scanning = false
-			$scope.scanProgress = 0
 			$scope.$apply()
 		})
 		
-		$scope.scanned = 0
 		scanner.run()
 		
 		$scope.scanning = true

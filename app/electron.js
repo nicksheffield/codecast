@@ -68,13 +68,13 @@ var {ipc} = require('./electron/ipc')
 // ------------------------------------------------------------
 // Start HTTP/Socket.IO server
 var port = 3000
-var range = 5
+var range = 0
 
 var matches = []
 
 var options = {
 	target: '127.0.0.1',
-	port: port + '-' + (port + range), // 3000-3005
+	port: port + '-' + (port + range),
 	status: 'TROU', // Timeout, Refused, Open, Unreachable
 	banner: true
 }

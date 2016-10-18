@@ -46,7 +46,7 @@
 		</div>
 		
 		<ul class="history">
-			<li class="folder" ng-repeat="folder in folders" ng-click="setFolder(folder)">
+			<li class="folder" ng-repeat="folder in folders | limitTo: 5" ng-click="setFolder(folder)">
 				<span class="folder-name">
 					<span class="pre">{{ folder.preReadable }}</span><span class="name">{{ folder.name }}</span>
 				</span>
