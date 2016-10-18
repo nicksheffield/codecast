@@ -1,15 +1,22 @@
+const fs = require('fs')
+const path = require('path')
+
 const _ = require('lodash')
 const chokidar = require('chokidar')
 const minimatch = require('minimatch')
-const fs = require('fs')
-const path = require('path')
-const ignore = require('./ignore')
 const electron = require('electron')
 const express = require('express')
 
-const {io} = require('./sockets')
-
 var main = {message: 'Hello!'}
+
+var service = {
+	main: main
+}
+
+module.exports = service
+
+const {ignore} = require('./ignore')
+const {io} = require('./sockets')
 
 main.setFolder = function(path, event) {
 	if(!path) return false
@@ -122,5 +129,3 @@ main.off = function() {
 main.listening = function() {
 	
 }
-
-module.exports = main

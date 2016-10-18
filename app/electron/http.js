@@ -1,9 +1,18 @@
-var config = require('./config')
 var fs = require('fs')
 var express = require('express')
 var app = express()
 var http = require('http').Server(app)
 var bodyParser = require('body-parser')
+
+var service = {
+	http: http,
+	app: app
+}
+
+module.exports = service
+
+var {main} = require('./main')
+var {config} = require('./config')
 
 app.use(express.static(__dirname + '/public/'))
 app.use(bodyParser.json())
@@ -15,7 +24,7 @@ app.get('/api/flash', function(req, res) {
 
 app.get('/api/meta', function(req, res) {
 	res.send({
-		currentFolder: require('./main').currentFolder,
+		currentFolder: main.currentFolder,
 		username: config.get('username'),
 		broadcasting: true
 	})
@@ -49,8 +58,3 @@ app.post('/api/get_file', function(req, res) {
 })
 
 http.listen(3000)
-
-module.exports = {
-	http: http,
-	app: app
-}

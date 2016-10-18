@@ -1,10 +1,10 @@
 module.exports = {
-	config: require('./config'),
+	config: require('./config').config,
 	http: require('./http').http,
 	app: require('./http').app,
-	ignore: require('./ignore'),
+	ignore: require('./ignore').ignore,
 	ipc: require('./ipc'),
-	main: require('./main'),
+	main: require('./main').main,
 	io: require('./sockets').io,
-	mainWindow: require('../electron').mainWindow
+	mainWindow: require('./window').mainWindow
 }

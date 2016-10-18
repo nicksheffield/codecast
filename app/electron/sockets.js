@@ -1,24 +1,28 @@
-var {http} = require('./http')
-var io = require('socket.io')(http)
+var socketio = require('socket.io')
 
-io.on('connection', function(socket) {
+var service = {
+	io: null
+}
+
+module.exports = service
+
+var {http} = require('./http')
+var {mainWindow} = require('./window')
+service.io = socketio(http)
+
+service.io.on('connection', function(socket) {
 	console.log('electron', require('../electron'))
 	require('../electron').mainWindow.webContents.send('user-connection', {
 		id: socket.id,
-		count: io.engine.clientsCount
+		count: service.io.engine.clientsCount
 	})
 	
 	socket.on('disconnect', function() {
 		setTimeout(function() {
 			require('../electron').mainWindow.webContents.send('user-connection', {
 				id: socket.id,
-				count: io.engine.clientsCount
+				count: service.io.engine.clientsCount
 			})
 		}, 100)
 	})
 })
-
-
-module.exports = {
-	io: io
-}

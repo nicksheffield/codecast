@@ -23,6 +23,10 @@ const others = []
 
 const ignore = {}
 
+module.exports = {
+	ignore: ignore
+}
+
 ignore.all = []
 
 ignore.bowerrc = function(folder) {
@@ -96,5 +100,3 @@ ignore.match = function(file) {
 	
 	return false
 }
-
-module.exports = ignore

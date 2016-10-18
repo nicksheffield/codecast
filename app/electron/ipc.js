@@ -1,8 +1,9 @@
 const {ipcMain} = require('electron')
-const {io} = require('./sockets')
-const main = require('./main')
 const _ = require('lodash')
 const fs = require('fs')
+
+const {io} = require('./sockets')
+const {main} = require('./main')
 
 ipcMain.on('turn-on', function(event) {
 	main.on()
