@@ -72,11 +72,15 @@ ignore.sublime = function(folder) {
 ignore.ccignore = function(folder) {
 	var ignores = []
 	
-	var fileContents = fs.readFileSync(folder.path + '.ccignore', 'utf8')
+	if(fs.existsSync(folder.path + '.ccignore')) {
+		var fileContents = fs.readFileSync(folder.path + '.ccignore', 'utf8')
+		
+		var globs = fileContents.split(/\n/g)
+		
+		ignores = ignores.concat(globs)
+	}
 	
-	var globs = fileContents.split(/\n/g)
-	
-	return globs
+	return ignores
 }
 
 ignore.setup = function(folder) {

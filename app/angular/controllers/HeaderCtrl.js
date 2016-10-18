@@ -1,9 +1,11 @@
 angular.module('app.controllers')
 
-.controller('HeaderCtrl', function($scope, $location, $store, $ipc, $colorschemes, $colorthemes) {
+.controller('HeaderCtrl', function($scope, $rootScope, $location, $store, $ipc, $colorschemes, $colorthemes) {
 	$scope.current = $location.path()
 	
 	$scope.version = process.env.npm_package_version
+	
+	$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	
 	$scope.store = $store
 	
