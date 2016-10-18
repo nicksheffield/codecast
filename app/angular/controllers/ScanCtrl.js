@@ -8,27 +8,35 @@ angular.module('app.controllers')
 	
 	$scope.broadcasters = $store.broadcasters
 	
+	$scope.scanProgress = 0
+	$scope.scanned = 0
+	
 	$scope.scan = function() {
 		var evilscan = require('evilscan')
 		var ip = require('ip')
-		 
+		
 		var address = ip.address().split('.')
-		 
+		
 		address.pop()
-		 
+		
 		var options = {
 			target: address.join('.') + '.0/24',
 			port: '3000-3005',
 			status: 'TROU', // Timeout, Refused, Open, Unreachable
 			banner: true
 		}
-		 
+		
 		var scanner = new evilscan(options)
-		 
+		
 		scanner.on('result',function(data) {
+			$scope.scanned++
+			
+			var max = 255 * 5 // 5 is the difference between 3000 and 3005, up above in the options.port
+			
+			$scope.scanProgress = 100 / max * $scope.scanned
+			$scope.$apply()
 
 			if(data.status == 'open') {
-				console.log(data)
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
@@ -58,17 +66,19 @@ angular.module('app.controllers')
 				}
 			}
 		})
-		 
+		
 		scanner.on('error',function(err) {
 			throw new Error(err.toString())
 		})
-		 
+		
 		scanner.on('done',function() {
-			// finished !
+			// finished!
 			$scope.scanning = false
+			$scope.scanProgress = 0
 			$scope.$apply()
 		})
-		 
+		
+		$scope.scanned = 0
 		scanner.run()
 		
 		$scope.scanning = true

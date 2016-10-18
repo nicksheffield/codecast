@@ -5,8 +5,8 @@ angular.module('app.services')
 	var on = {}
 
 	var service = {
-		connect: function(ip) {
-			service.socket = io.connect('http://' + ip + ':3000')
+		connect: function(host) {
+			service.socket = io.connect(host)
 			
 			for(var eventName in on) {
 				service.socket.on(eventName, on[eventName])

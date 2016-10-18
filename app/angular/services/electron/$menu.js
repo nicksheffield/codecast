@@ -10,7 +10,7 @@ angular.module('app.services')
 	
 	var service = {
 		currentFile: null,
-		ip: null,
+		host: null,
 		openInBrowser: function(visible) {
 			item.visible = visible
 			Menu.setApplicationMenu(menu)
@@ -19,7 +19,7 @@ angular.module('app.services')
 	
 	var item = new MenuItem({label: 'Open in Browser', click: function() {
 		if(service.currentFile) {
-			$shell.openExternal('http://' + service.ip + ':3333/' + service.currentFile.shortpath)
+			$shell.openExternal(service.host + '/' + service.currentFile.shortpath)
 		}
 	}})
 	

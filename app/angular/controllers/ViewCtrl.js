@@ -14,7 +14,7 @@ angular.module('app.controllers')
 	var port = $routeParams.port
 	var host = 'http://' + ip + ':' + port
 	
-	$menu.ip = ip
+	$menu.host = host
 	$menu.openInBrowser(true)
 	
 	$scope.$watch('currentFile', function(newVal) {
@@ -146,7 +146,7 @@ angular.module('app.controllers')
 		load()
 	})
 	
-	$socket.connect(ip)
+	$socket.connect(host)
 	
 	function searchForAndChange(path, files) {
 		_.find(files, function(file) {
