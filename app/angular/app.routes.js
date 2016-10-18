@@ -7,7 +7,7 @@ angular.module('app.routes')
 			templateUrl: 'angular/views/scan.html',
 			controller: 'ScanCtrl'
 		})
-		.when('/view/:ip', {
+		.when('/view/:ip/:port', {
 			templateUrl: 'angular/views/view.html',
 			controller: 'ViewCtrl'
 		})

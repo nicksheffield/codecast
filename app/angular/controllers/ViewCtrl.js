@@ -11,7 +11,8 @@ angular.module('app.controllers')
 	$scope.lightmode = $config.get('lightmode')
 	
 	var ip = $routeParams.ip
-	var host = 'http://' + ip + ':3000'
+	var port = $routeParams.port
+	var host = 'http://' + ip + ':' + port
 	
 	$menu.ip = ip
 	$menu.openInBrowser(true)
@@ -109,7 +110,7 @@ angular.module('app.controllers')
 				   split[split.length-1] == 'gif' ||
 				   split[split.length-1] == 'png')
 				{
-					file.imageurl = 'http://' + ip + ':3000/' + file.shortpath.replace(/\s/g, '%20')
+					file.imageurl = host + '/' + file.shortpath.replace(/\s/g, '%20')
 					$scope.currentFile = file
 					$scope.syntax = ''
 				} else {

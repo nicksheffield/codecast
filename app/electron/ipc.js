@@ -42,22 +42,9 @@ ipcMain.on('open-file-dialog', function(event) {
 })
 
 ipcMain.on('drop-folder', function(event, path) {
-	// setFolder(event, path)
 	folder.setFolder(path, event)
 })
 
-function setFolder(event, path) {
-	
-	if(folder.setFolder(path)) {
-		
-		event.sender.send('selected-directory', folder)
-		
-		var history = config.get('history')
-		
-		history = _.reject(history, (f) => f.path == path)
-		
-		history.unshift(folder)
-		
-		config.set('history', history)
-	}
+module.exports = {
+	ipc: ipcMain
 }

@@ -1,5 +1,4 @@
 Todo
 
-	- Better organisation in electron.js and live-file-view.js
-		- maybe refactor them both into the same structure
-			- oh shit, maybe move live-file-view stuff into the renderer?
+	- Check if port 3000 is being used, and if it is, then use check 3001, and if that's being used, check 3002, and keep going until we find a port between 3000 and say 3050 that isn't being used, and bind to that
+		- angular will need some rewrites so that it scans in that range and all

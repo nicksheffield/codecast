@@ -14,7 +14,7 @@
 	<div class="page-content">
 		<ul class="broadcasters">
 			<li ng-repeat="caster in broadcasters | filter: {meta: {broadcasting: true}} as filtered" class="broadcaster">
-				<a href="#/view/{{ caster.ip }}" layout="row" align="center">
+				<a href="#/view/{{ caster.ip }}/{{ caster.port }}" layout="row" align="center">
 					<div layout="col" ratio="1">
 						<div class="username">
 							{{ caster.meta.username }}

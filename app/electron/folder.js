@@ -13,8 +13,7 @@ module.exports = {
 	folder: service
 }
 
-const {ignore} = require('./ignore')
-const {io} = require('./central')
+const {io, config, ignore} = require('./central')
 
 service.setFolder = function(path, event) {
 	if(!path) return false
@@ -37,6 +36,12 @@ service.setFolder = function(path, event) {
 	
 	service.currentFolder = folder
 	ignore.setup(folder)
+	config.set('currentFolder', folder)
+	
+	var history = config.get('history')
+	history = _.reject(history, (f) => f.path == path)
+	history.unshift(folder)
+	config.set('history', history)
 	
 	if(event) event.sender.send('selected-directory', folder)
 	

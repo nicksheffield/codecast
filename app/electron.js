@@ -4,12 +4,14 @@ var _ = require('lodash')
 var io = require('socket.io')
 var express = require('express')
 var bodyParser = require('body-parser')
+var evilscan = require('evilscan')
 
 
 // ------------------------------------------------------------
 // Setup central
 var central = require('./electron/central')
 central.memory = { broadcasting: false }
+central.ignore = require('./electron/ignore').ignore
 
 
 // ------------------------------------------------------------
@@ -60,9 +62,41 @@ if(config.get('currentFolder')) {
 
 // ------------------------------------------------------------
 // Setup IPC
-require('./electron/ipc')
+var {ipc} = require('./electron/ipc')
 
 
 // ------------------------------------------------------------
 // Start HTTP/Socket.IO server
-server.listen(3000)
+var port = 3000
+var range = 5
+
+var matches = []
+
+var options = {
+	target: '127.0.0.1',
+	port: port + '-' + (port + range), // 3000-3005
+	status: 'TROU', // Timeout, Refused, Open, Unreachable
+	banner: true
+}
+
+var scanner = new evilscan(options)
+
+scanner.on('result',function(data) {
+	matches.push(data)
+});
+
+scanner.on('error',function(err) {
+	throw new Error(err.toString());
+});
+
+scanner.on('done',function() {
+	
+	var m = _.find(matches, function(match) {
+		return match.status == 'closed (refused)'
+	})
+	
+	console.log('Listening on port', m.port)
+	server.listen(m.port)
+});
+
+scanner.run();

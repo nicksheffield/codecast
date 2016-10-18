@@ -18,7 +18,7 @@ angular.module('app.controllers')
 		 
 		var options = {
 			target: address.join('.') + '.0/24',
-			port: '3000',
+			port: '3000-3005',
 			status: 'TROU', // Timeout, Refused, Open, Unreachable
 			banner: true
 		}
@@ -28,6 +28,7 @@ angular.module('app.controllers')
 		scanner.on('result',function(data) {
 
 			if(data.status == 'open') {
+				console.log(data)
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
@@ -37,7 +38,7 @@ angular.module('app.controllers')
 				}
 				
 				// get meta
-				$http.get('http://' + data.ip + ':3000/api/meta')
+				$http.get('http://' + data.ip + ':' + data.port + '/api/meta')
 					.then(function(res) {
 						console.log('meta', res)
 						var caster = _.find($scope.broadcasters, function(item) {

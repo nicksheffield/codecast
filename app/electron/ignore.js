@@ -24,10 +24,6 @@ var others = []
 
 const ignore = {}
 
-module.exports = {
-	ignore: ignore
-}
-
 ignore.all = []
 
 ignore.bowerrc = function(folder) {
@@ -82,8 +78,6 @@ ignore.ccignore = function(folder) {
 			return glob[0] !== '#' && glob.length
 		})
 		
-		console.log('.ccignore', globs)
-		
 		ignores = ignores.concat(globs)
 	}
 	
@@ -113,4 +107,8 @@ ignore.match = function(file) {
 	}
 	
 	return false
+}
+
+module.exports = {
+	ignore: ignore
 }
