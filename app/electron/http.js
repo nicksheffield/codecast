@@ -1,46 +1,39 @@
 var fs = require('fs')
 var express = require('express')
-var app = express()
-var http = require('http').Server(app)
-var bodyParser = require('body-parser')
+var _ = require('lodash')
 
-var service = {
-	http: http,
-	app: app
-}
+var router = express.Router()
 
-module.exports = service
-
-var {main, config} = require('./central')
-
-app.use(express.static(__dirname + '/public/'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
-app.get('/api/flash', function(req, res) {
-	res.send({username: config.get('username')})
-})
-
-app.get('/api/meta', function(req, res) {
+router.get('/flash', function(req, res) {
 	res.send({
-		currentFolder: main.currentFolder,
-		username: config.get('username'),
-		broadcasting: true
+		codecast: true,
+		version: process.env.npm_package_version,
+		username: config.get('username')
 	})
 })
 
-app.get('/api/files', function(req, res) {
+router.get('/meta', function(req, res) {
+	var {folder, config, memory} = require('./central')
 	
-	var main = require('./main')
+	res.send({
+		currentFolder: folder.currentFolder,
+		username: config.get('username'),
+		broadcasting: memory.broadcasting
+	})
+})
+
+router.get('/files', function(req, res) {
 	
-	if(main.currentFolder) {
-		var files = main.findFiles(main.currentFolder)
+	var {folder} = require('./central')
+	
+	if(folder.currentFolder) {
+		var files = folder.findFiles(folder.currentFolder)
 		
 		files = [
 			{
 				type: 'directory',
-				path: main.currentFolder.path,
-				name: main.currentFolder.name + '/',
+				path: folder.currentFolder.path,
+				name: folder.currentFolder.name + '/',
 				shortpath: '/',
 				files: files
 			}
@@ -52,8 +45,8 @@ app.get('/api/files', function(req, res) {
 	}
 })
 
-app.post('/api/get_file', function(req, res) {
+router.post('/get_file', function(req, res) {
 	res.send(fs.readFileSync(req.body.path, 'utf-8'))
 })
 
-http.listen(3000)
+module.exports = router

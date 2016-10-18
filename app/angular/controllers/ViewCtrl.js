@@ -109,7 +109,7 @@ angular.module('app.controllers')
 				   split[split.length-1] == 'gif' ||
 				   split[split.length-1] == 'png')
 				{
-					file.imageurl = 'http://' + ip + ':3333/' + file.shortpath.replace(/\s/g, '%20')
+					file.imageurl = 'http://' + ip + ':3000/' + file.shortpath.replace(/\s/g, '%20')
 					$scope.currentFile = file
 					$scope.syntax = ''
 				} else {

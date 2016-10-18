@@ -5,11 +5,12 @@ var electronApp = require('electron').app
 var BrowserWindow = require('electron').BrowserWindow
 
 var service = {
-	mainWindow: null
+	mainWindow: {
+		window: null
+	}
 }
 
 module.exports = service
-
 
 // ------------------------------------------------------------
 //   Main Application Processes
@@ -17,32 +18,22 @@ module.exports = service
 electronApp.on('ready', function() {
 	require('./menu')
 	
-	// ------------------------------------------------------------
-	//   Libs
-	// ------------------------------------------------------------
-	// const {main, config} = require('./electron/central')
-	const {main, config} = require('./central')
-	
 	var screen = require('electron').screen.getPrimaryDisplay().workAreaSize
 	
 	var inset = 100
 	
-	service.mainWindow = new BrowserWindow({
+	service.mainWindow.window = new BrowserWindow({
 		width: screen.width - (inset * 2),
 		height: screen.height - (inset * 2),
 		x: inset,
 		y: inset + 25
 	})
 	
-	service.mainWindow.loadURL(`file://${__dirname}/../app.html`)
+	service.mainWindow.window.loadURL(`file://${__dirname}/../app.html`)
 	
-	service.mainWindow.on('closed', function () {
-		service.mainWindow = null
+	service.mainWindow.window.on('closed', function () {
+		service.mainWindow.window = null
 	})
-	
-	if(config.get('currentFolder')) {
-		main.setFolder(config.get('currentFolder').path)
-	}
 })
 
 electronApp.on('window-all-closed', function() {

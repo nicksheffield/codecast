@@ -7,17 +7,16 @@ const minimatch = require('minimatch')
 const electron = require('electron')
 const express = require('express')
 
-var main = {message: 'Hello!'}
+var service = {message: 'Hello!'}
 
-var service = {
-	main: main
+module.exports = {
+	folder: service
 }
 
-module.exports = service
+const {ignore} = require('./ignore')
+const {io} = require('./central')
 
-const {ignore, io} = require('./central')
-
-main.setFolder = function(path, event) {
+service.setFolder = function(path, event) {
 	if(!path) return false
 
 	var stat = fs.lstatSync(path)
@@ -36,29 +35,29 @@ main.setFolder = function(path, event) {
 		preReadable: (splitted.slice(0, splitted.length-2).join('/') + '/').replace(electron.app.getPath('home'), '~')
 	}
 	
-	main.currentFolder = folder
+	service.currentFolder = folder
 	
 	if(event) event.sender.send('selected-directory', folder)
 	
-	console.log('main.currentFolder:', main.currentFolder.pathReadable)
+	console.log('service.currentFolder:', service.currentFolder.pathReadable)
 	
 	io.emit('fsupdate')
 	
-	var {app} = require('./http')
+	var {expressApp} = require('./central')
 	
-	if(app._router) {
-		app._router.stack = _.filter(app._router.stack, function(middleware) {
+	if(expressApp._router) {
+		expressApp._router.stack = _.filter(expressApp._router.stack, function(middleware) {
 			return middleware.name !== 'serveStatic'
 		})
 	}
 	
-	app.use(express.static(main.currentFolder.path))
+	expressApp.use(express.static(service.currentFolder.path))
 
 	// ------------------------------------------------------------
 	//   FS Events
 	// ------------------------------------------------------------
-	var watcher = chokidar.watch(main.currentFolder.path, {
-		ignored: ignore.all.map((str) => main.currentFolder.path+str),
+	var watcher = chokidar.watch(service.currentFolder.path, {
+		ignored: ignore.all.map((str) => service.currentFolder.path+str),
 		ignoreInitial: true
 	})
 
@@ -77,11 +76,18 @@ main.setFolder = function(path, event) {
 	return true
 }
 
-main.clearFolder = function() {
+service.clearFolder = function() {
+	service.currentFolder = {
+		path: '',
+		readable: '',
+		pre: '',
+		name: ''
+	}
 	
+	io.emit('fsupdate')
 }
 
-main.findFiles = function(folder) {
+service.findFiles = function(folder) {
 	var folderStat = fs.lstatSync(folder.path)
 	
 	if(folderStat.isDirectory() && path.extname(folder.path) !== '.asar') {
@@ -96,14 +102,14 @@ main.findFiles = function(folder) {
 			thing.type = stat.isFile() ? 'file' : 'directory'
 			thing.path = folder.path + name
 			thing.name = name
-			thing.shortpath = thing.path.replace(main.currentFolder.path, '')
+			thing.shortpath = thing.path.replace(service.currentFolder.path, '')
 		
 			if(ignore.match(thing)) {
 				return false
 			}
 			
 			if(thing.type == 'directory') {
-				thing.files = main.findFiles(thing)
+				thing.files = service.findFiles(thing)
 			}
 			
 			files.push(thing)
@@ -115,16 +121,4 @@ main.findFiles = function(folder) {
 	} else {
 		return []
 	}
-}
-
-main.on = function() {
-	
-}
-
-main.off = function() {
-	
-}
-
-main.listening = function() {
-	
 }

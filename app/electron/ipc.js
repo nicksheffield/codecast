@@ -2,29 +2,22 @@ const {ipcMain} = require('electron')
 const _ = require('lodash')
 const fs = require('fs')
 
-const {io} = require('./sockets')
-const {main} = require('./main')
+const {io, folder, memory} = require('./central')
 
 ipcMain.on('turn-on', function(event) {
-	main.on()
+	memory.broadcasting = true
 	
 	event.sender.send('turned-on')
 })
 
 ipcMain.on('turn-off', function(event) {
-	main.off()
+	memory.broadcasting = false
 	
 	event.sender.send('turned-off')
 })
 
 ipcMain.on('get-status', function(event) {
-	var status = main.listening()
-	
-	event.sender.send('listening-status', status)
-})
-
-ipcMain.on('get-package', function(event) {
-	event.sender.send('got-package', JSON.parse(fs.readFileSync('./app/package.json', "utf8")))
+	event.sender.send('listening-status', memory.broadcasting)
 })
 
 ipcMain.on('request-io-update', function(event) {
@@ -38,24 +31,24 @@ ipcMain.on('open-error-dialog', function (event, data) {
 })
 
 ipcMain.on('clear-folder', function(event, path) {
-	main.clearFolder()
+	folder.clearFolder()
 })
 
 ipcMain.on('open-file-dialog', function(event) {
 	var window = BrowserWindow.fromWebContents(event.sender)
 	var files = dialog.showOpenDialog(window, { properties: [ 'openDirectory' ]})
 	
-	main.setFolder(files[0] + '/', event)
+	folder.setFolder(files[0] + '/', event)
 })
 
 ipcMain.on('drop-folder', function(event, path) {
 	// setFolder(event, path)
-	main.setFolder(path, event)
+	folder.setFolder(path, event)
 })
 
 function setFolder(event, path) {
 	
-	if(main.setFolder(path)) {
+	if(folder.setFolder(path)) {
 		
 		event.sender.send('selected-directory', folder)
 		
