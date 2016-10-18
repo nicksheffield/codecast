@@ -1,17 +1,18 @@
-var socketio = require('socket.io')
+var io = require('socket.io')()
 
 var service = {
-	io: null
+	io: io
 }
 
 module.exports = service
 
-var {http} = require('./http')
-var {mainWindow} = require('./window')
-service.io = socketio(http)
+var {http, mainWindow} = require('./central')
+
+console.log('central', require('./central'))
+
+service.io.attach(http)
 
 service.io.on('connection', function(socket) {
-	console.log('electron', require('../electron'))
 	require('../electron').mainWindow.webContents.send('user-connection', {
 		id: socket.id,
 		count: service.io.engine.clientsCount

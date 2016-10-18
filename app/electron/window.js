@@ -12,18 +12,16 @@ module.exports = service
 
 
 // ------------------------------------------------------------
-//   Libs
-// ------------------------------------------------------------
-// const {main, config} = require('./electron/central')
-const {main} = require('./main')
-const {config} = require('./config')
-
-
-// ------------------------------------------------------------
 //   Main Application Processes
 // ------------------------------------------------------------
 electronApp.on('ready', function() {
 	require('./menu')
+	
+	// ------------------------------------------------------------
+	//   Libs
+	// ------------------------------------------------------------
+	// const {main, config} = require('./electron/central')
+	const {main, config} = require('./central')
 	
 	var screen = require('electron').screen.getPrimaryDisplay().workAreaSize
 	

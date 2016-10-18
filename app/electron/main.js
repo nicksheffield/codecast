@@ -15,8 +15,7 @@ var service = {
 
 module.exports = service
 
-const {ignore} = require('./ignore')
-const {io} = require('./sockets')
+const {ignore, io} = require('./central')
 
 main.setFolder = function(path, event) {
 	if(!path) return false

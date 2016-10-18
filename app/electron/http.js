@@ -11,8 +11,7 @@ var service = {
 
 module.exports = service
 
-var {main} = require('./main')
-var {config} = require('./config')
+var {main, config} = require('./central')
 
 app.use(express.static(__dirname + '/public/'))
 app.use(bodyParser.json())
