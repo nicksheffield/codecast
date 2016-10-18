@@ -5,6 +5,16 @@
 	<title ng-bind="WindowTitle">CodeCast</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
+	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/flexy/flexy.min.css">
+	<link rel="stylesheet" href="{{ colortheme }}">
+	<link rel="stylesheet" href="components/prism/plugins/line-numbers/prism-line-numbers.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-base/prism-previewer-base.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-color/prism-previewer-color.css">
+	<link rel="stylesheet" href="components/prism/plugins/previewer-gradient/prism-previewer-gradient.css">
+	<link rel="stylesheet" href="dist/style.min.css">
+	
 	<script src="components/jquery/dist/jquery.js"></script>
 	<script>try{$=jQuery=module.exports}catch(e){} // https://github.com/electron/electron/issues/345</script>
 	<script src="components/angular/angular.min.js"></script>
@@ -31,16 +41,6 @@
 	
 	<script src="assets/socket.io-1.4.5.js"></script>
 	<script src="dist/app.min.js"></script>
-	
-	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="components/flexy/flexy.min.css">
-	<link rel="stylesheet" href="{{ colortheme || '' }}">
-	<link rel="stylesheet" href="components/prism/plugins/line-numbers/prism-line-numbers.css">
-	<link rel="stylesheet" href="components/prism/plugins/previewer-base/prism-previewer-base.css">
-	<link rel="stylesheet" href="components/prism/plugins/previewer-color/prism-previewer-color.css">
-	<link rel="stylesheet" href="components/prism/plugins/previewer-gradient/prism-previewer-gradient.css">
-	<link rel="stylesheet" href="dist/style.min.css">
 </head>
 <body class="{{ colorscheme || 'color-default' }}">
 	<div ng-view layout="full-col"></div>

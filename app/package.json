@@ -1,6 +1,19 @@
 {
 	"name": "codecast",
-	"version": "0.2.2",
+	"version": "0.3.2",
 	"author": "Nick Sheffield <numbereft@gmail.com> (http://nicksheffield.me/)",
-	"license": "MIT"
+	"description": "Live broadcast code files across the local network",
+	"license": "MIT",
+	"main": "electron.js",
+	"dependencies": {
+	  "body-parser": "^1.15.2",
+	  "chokidar": "^1.6.0",
+	  "electron-config": "^0.2.1",
+	  "evilscan": "github:nicksheffield/evilscan",
+	  "express": "^4.14.0",
+	  "ip": "^1.1.3",
+	  "lodash": "^4.16.4",
+	  "minimatch": "^3.0.3",
+	  "socket.io": "^1.5.0"
+	}
 }
