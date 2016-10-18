@@ -77,6 +77,13 @@ ignore.ccignore = function(folder) {
 		
 		var globs = fileContents.split(/\n/g)
 		
+		// filter out comments and empty lines
+		globs = globs.filter(function(glob) {
+			return glob[0] !== '#' && glob.length
+		})
+		
+		console.log('.ccignore', globs)
+		
 		ignores = ignores.concat(globs)
 	}
 	
