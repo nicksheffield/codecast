@@ -1,5 +1,6 @@
 const minimatch = require('minimatch')
 const fs = require('fs')
+var _ = require('lodash')
 
 const defaults = [
 	'node_modules',
@@ -19,7 +20,7 @@ const defaults = [
 ]
 
 // These ignores are set up per folder
-const others = []
+var others = []
 
 const ignore = {}
 
@@ -51,7 +52,7 @@ ignore.sublime = function(folder) {
 	var sublimeProject = null
 
 	_.forEach(rootFiles, function(file) {
-		if(sublimeProjectPattern.test(file)) {
+		if(pattern.test(file)) {
 			sublimeProject = JSON.parse(fs.readFileSync(folder.path + file, "utf8"))
 		}
 	})
@@ -71,17 +72,19 @@ ignore.sublime = function(folder) {
 ignore.ccignore = function(folder) {
 	var ignores = []
 	
-	// coming later
+	var fileContents = fs.readFileSync(folder.path + '.ccignore', 'utf8')
 	
-	return ignores
+	var globs = fileContents.split(/\n/g)
+	
+	return globs
 }
 
 ignore.setup = function(folder) {
 	others.length = 0
 	
-	others.push(ignore.bowerrc(folder))
-	others.push(ignore.sublime(folder))
-	others.push(ignore.ccignore(folder))
+	others = others.concat(ignore.bowerrc(folder))
+	others = others.concat(ignore.sublime(folder))
+	others = others.concat(ignore.ccignore(folder))
 	
 	ignore.all = defaults.concat(others)
 }

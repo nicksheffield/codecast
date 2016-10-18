@@ -36,10 +36,11 @@ service.setFolder = function(path, event) {
 	}
 	
 	service.currentFolder = folder
+	ignore.setup(folder)
 	
 	if(event) event.sender.send('selected-directory', folder)
 	
-	console.log('service.currentFolder:', service.currentFolder.pathReadable)
+	console.log('currentFolder:', service.currentFolder.pathReadable)
 	
 	io.emit('fsupdate')
 	
