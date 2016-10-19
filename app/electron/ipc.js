@@ -20,10 +20,6 @@ ipcMain.on('get-status', function(event) {
 	event.sender.send('listening-status', memory.broadcasting)
 })
 
-ipcMain.on('get-version', function(event) {
-	event.sender.send('version', app.getVersion())
-})
-
 ipcMain.on('request-io-update', function(event) {
 	event.sender.send('user-connection', {
 		count: io.engine.clientsCount

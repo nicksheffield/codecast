@@ -33,9 +33,9 @@ service.setFolder = function(fPath, event) {
 	ignore.setup(folder)
 	config.set('currentFolder', folder)
 	
-	let history = config.get('history') || []
-	history = history.filter((f) => f.path !== fPath)
-	history.unshift()
+	let history = config.get('history')
+	history = _.reject(history, (f) => f.path == fPath)
+	history.unshift(folder)
 	config.set('history', history)
 	
 	if(event) event.sender.send('selected-directory', folder)

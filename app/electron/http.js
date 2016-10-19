@@ -28,7 +28,7 @@ router.get('/files', function(req, res) {
 	const {folder} = require('./central')
 	
 	if(folder.currentFolder) {
-		const files = folder.findFiles(folder.currentFolder)
+		let files = folder.findFiles(folder.currentFolder)
 		
 		files = [
 			{

@@ -75,7 +75,6 @@ angular.module('app.controllers')
 	$ipc.on('selected-directory', function (event, folder) {
 		if(folder) {
 			$scope.mainFolder = folder
-			$scope.$apply()
 		}
 		
 		$timeout(function() {

@@ -1,7 +1,9 @@
 angular.module('app.controllers')
 
-.controller('HeaderCtrl', function($scope, $rootScope, $location, $store, $ipc, $colorschemes, $colorthemes) {
+.controller('HeaderCtrl', function($scope, $rootScope, $location, $store, $ipc, $remote, $colorschemes, $colorthemes) {
 	$scope.current = $location.path()
+	
+	$scope.version = $remote.app.getVersion()
 	
 	$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	
@@ -11,12 +13,5 @@ angular.module('app.controllers')
 	
 	$ipc.on('listening-status', function(event, listening) {
 		$store.casting = listening
-	})
-	
-	$ipc.emit('get-version')
-	
-	$ipc.on('version', function(event, version) {
-		$scope.version = version
-		$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	})
 })
