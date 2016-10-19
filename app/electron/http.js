@@ -1,19 +1,20 @@
-var fs = require('fs')
-var express = require('express')
-var _ = require('lodash')
+const fs = require('fs')
+const express = require('express')
+const _ = require('lodash')
+const package = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
 
-var router = express.Router()
+const router = express.Router()
 
 router.get('/flash', function(req, res) {
 	res.send({
 		codecast: true,
-		version: process.env.npm_package_version,
+		version: package.version,
 		username: config.get('username')
 	})
 })
 
 router.get('/meta', function(req, res) {
-	var {folder, config, memory} = require('./central')
+	const {folder, config, memory} = require('./central')
 	
 	res.send({
 		currentFolder: folder.currentFolder,
@@ -24,10 +25,10 @@ router.get('/meta', function(req, res) {
 
 router.get('/files', function(req, res) {
 	
-	var {folder} = require('./central')
+	const {folder} = require('./central')
 	
 	if(folder.currentFolder) {
-		var files = folder.findFiles(folder.currentFolder)
+		const files = folder.findFiles(folder.currentFolder)
 		
 		files = [
 			{

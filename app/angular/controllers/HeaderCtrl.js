@@ -3,7 +3,7 @@ angular.module('app.controllers')
 .controller('HeaderCtrl', function($scope, $rootScope, $location, $store, $ipc, $colorschemes, $colorthemes) {
 	$scope.current = $location.path()
 	
-	$scope.version = process.env.npm_package_version
+	$scope.version = JSON.parse(require('fs').readFileSync('./package.json', 'utf8')).version
 	
 	$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	

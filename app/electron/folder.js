@@ -4,7 +4,7 @@ const path = require('path')
 const _ = require('lodash')
 const chokidar = require('chokidar')
 const minimatch = require('minimatch')
-const electron = require('electron')
+const {app} = require('electron')
 const express = require('express')
 
 var service = {message: 'Hello!'}
@@ -15,32 +15,27 @@ module.exports = {
 
 const {io, config, ignore} = require('./central')
 
-service.setFolder = function(path, event) {
-	if(!path) return false
+service.setFolder = function(fPath, event) {
+	if(!fPath) return false
+	if(!fs.lstatSync(fPath).isDirectory()) return false
 
-	var stat = fs.lstatSync(path)
+	const home = app.getPath('home')
 	
-	if(!stat.isDirectory()) return false
-		
-	var splitted = path.replace(/\/$/, '') + '/'
-	
-	splitted = splitted.split('/')
-	
-	var folder = {
-		name: splitted[splitted.length-2],
-		path: path,
-		pathReadable: path.replace(electron.app.getPath('home'), '~'),
-		pre: splitted.slice(0, splitted.length-2).join('/') + '/',
-		preReadable: (splitted.slice(0, splitted.length-2).join('/') + '/').replace(electron.app.getPath('home'), '~')
+	const folder = {
+		name: path.basename(fPath),
+		path: fPath,
+		pathReadable: fPath.replace(home, '~'),
+		pre: path.dirname(fPath) + '/',
+		preReadable: path.dirname(fPath).replace(app.getPath('home'), '~') + '/'
 	}
 	
 	service.currentFolder = folder
 	ignore.setup(folder)
 	config.set('currentFolder', folder)
 	
-	var history = config.get('history')
-	history = _.reject(history, (f) => f.path == path)
-	history.unshift(folder)
+	let history = config.get('history') || []
+	history = history.filter((f) => f.path !== fPath)
+	history.unshift()
 	config.set('history', history)
 	
 	if(event) event.sender.send('selected-directory', folder)
@@ -49,7 +44,7 @@ service.setFolder = function(path, event) {
 	
 	io.emit('fsupdate')
 	
-	var {expressApp} = require('./central')
+	const {expressApp} = require('./central')
 	
 	if(expressApp._router) {
 		expressApp._router.stack = _.filter(expressApp._router.stack, function(middleware) {
