@@ -19,14 +19,14 @@ angular.module('app.controllers')
 		
 		address.pop()
 		
-		var port = 3000
-		var distance = 0
+		var {port, range} = require('./electron/ports.js')
 		
 		var options = {
 			target: address.join('.') + '.0/24',
-			port: port + '-' + (port + distance),
-			status: 'TROU', // Timeout, Refused, Open, Unreachable
-			banner: true
+			port: range,
+			status: 'TO', // Timeout, Refused, Open, Unreachable
+			banner: true,
+			concurrency: 4000
 		}
 		
 		var scanner = new evilscan(options)
@@ -34,6 +34,7 @@ angular.module('app.controllers')
 		scanner.on('result',function(data) {
 
 			if(data.status == 'open') {
+				console.log('open', data)
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
@@ -70,12 +71,14 @@ angular.module('app.controllers')
 		
 		scanner.on('done',function() {
 			// finished!
+			console.log('scan - finished')
 			$scope.scanning = false
 			$scope.$apply()
 		})
 		
 		scanner.run()
 		
+		console.log('scan - started')
 		$scope.scanning = true
 	}
 	

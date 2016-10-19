@@ -4,16 +4,16 @@ const evilscan = require('evilscan')
 const {server} = require('./central')
 const {dialog} = require('electron')
 
-const port = 3000
-const range = 0
+const {port, range} = require('./ports.js')
 
 const matches = []
 
 const options = {
 	target: '127.0.0.1',
-	port: port + '-' + (port + range),
+	port: range,
 	status: 'TROU', // Timeout, Refused, Open, Unreachable
-	banner: true
+	banner: false,
+	concurrency: 1000
 }
 
 const scanner = new evilscan(options)

@@ -1,6 +1,7 @@
 var gulp          = require('gulp')                         // the main guy
 var clone         = require('gulp-clone')                   // used to fork a stream
 var order         = require('gulp-order')                   // reorder files in stream
+var babel         = require('gulp-babel')                   // turn es6 into es5
 var uglify        = require('gulp-uglify')                  // minify js
 var rename        = require('gulp-rename')                  // rename file
 var concat        = require('gulp-concat')                  // merge files together
@@ -68,6 +69,7 @@ gulp.task('angular', function() {
 		.pipe(templateCache('templates.js', tplCacheOpts))  // make a template cache from them
 		.pipe(addsrc(paths.angular))                        // add the rest of the angular app
 		.pipe(order(['app.js']))                            // make sure app.js is first
+		.pipe(babel({ presets: ['es2015'] }))
 		.pipe(annotate())                                   // make angular callbacks minifyable
 		.pipe(uglify())                                     // minify the code
 		.pipe(concat('app.min.js'))                         // merge them all into the same file
