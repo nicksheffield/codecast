@@ -2,6 +2,7 @@ const _ = require('lodash')
 const evilscan = require('evilscan')
 
 const {server} = require('./central')
+const {dialog} = require('electron')
 
 const port = 3000
 const range = 0
@@ -31,8 +32,12 @@ scanner.on('done',function() {
 		return match.status == 'closed (refused)'
 	})
 	
-	console.log('Listening on port', m.port)
-	server.listen(m.port)
+	if(!m) {
+		dialog.showErrorBox('No free ports', 'All available ports are already in use. You won\'t be able to broadcast.')
+	} else {
+		console.log('Listening on port', m.port)
+		server.listen(m.port)
+	}
 });
 
 scanner.run();

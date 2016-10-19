@@ -1,4 +1,4 @@
-const {ipcMain, app} = require('electron')
+const {ipcMain, app, dialog} = require('electron')
 const _ = require('lodash')
 const fs = require('fs')
 
