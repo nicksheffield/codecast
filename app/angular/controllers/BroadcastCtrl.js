@@ -12,47 +12,43 @@ angular.module('app.controllers')
 	$scope.mainFolder = $store.mainFolder()
 	$scope.folders = $config.get('history')
 	
-	$ipc.send('request-io-update')
-	$ipc.send('get-status')
+	$ipc.emit('request-io-update')
+	$ipc.emit('get-status')
 	
 	$ipc.on('user-connection', function(event, data) {
 		$scope.userCount = data.count
-		$scope.$apply()
 	})
 	
 	$ipc.on('turned-on', function() {
 		$scope.casting = true
-		$scope.$apply()
 	})
 	
 	$ipc.on('turned-off', function() {
 		$scope.casting = false
-		$scope.$apply()
 	})
 	
 	$ipc.on('listening-status', function(event, listening) {
 		$scope.casting = listening
-		$scope.$apply()
 	})
 	
 	$scope.toggleCasting = function() {
 		if($scope.casting) {
-			$ipc.send('turn-off')
+			$ipc.emit('turn-off')
 		} else {
-			$ipc.send('turn-on')
+			$ipc.emit('turn-on')
 		}
 	}
 
 	$scope.openDialog = function() {
-		$ipc.send('open-file-dialog')
+		$ipc.emit('open-file-dialog')
 	}
 	
 	$scope.setFolder = function(folder) {
 		// $scope.mainFolder = folder
 		if(require('fs').existsSync(folder.path)) {
-			$ipc.send('drop-folder', folder.path)
+			$ipc.emit('drop-folder', folder.path)
 		} else {
-			$ipc.send('open-error-dialog', {
+			$ipc.emit('open-error-dialog', {
 				title: 'Folder not found',
 				message: 'That folder has either been deleted or moved.'
 			})
@@ -63,7 +59,7 @@ angular.module('app.controllers')
 		$config.set('currentFolder', '')
 		
 		$scope.mainFolder = ''
-		$ipc.send('clear-folder')
+		$ipc.emit('clear-folder')
 	}
 
 	$scope.clearHistory = function() {
@@ -95,6 +91,6 @@ angular.module('app.controllers')
 	document.body.ondrop = function(event) {
 		console.log(event.dataTransfer.files[0].path + '/')
 		event.preventDefault()
-		$ipc.send('drop-folder', event.dataTransfer.files[0].path + '/')
+		$ipc.emit('drop-folder', event.dataTransfer.files[0].path + '/')
 	}
 })

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('SettingsCtrl', function($scope, $rootScope, $config, $location, $menu, $ipc, $socket, $colorschemes, $colorthemes) {
+.controller('SettingsCtrl', function($scope, $rootScope, $config, $location, $menu, $socket, $colorschemes, $colorthemes) {
 	$socket.disconnect()
 	$menu.openInBrowser(false)
 	

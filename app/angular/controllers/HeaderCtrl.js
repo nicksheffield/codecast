@@ -3,16 +3,20 @@ angular.module('app.controllers')
 .controller('HeaderCtrl', function($scope, $rootScope, $location, $store, $ipc, $colorschemes, $colorthemes) {
 	$scope.current = $location.path()
 	
-	$scope.version = JSON.parse(require('fs').readFileSync('./package.json', 'utf8')).version
-	
 	$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	
 	$scope.store = $store
 	
-	$ipc.send('get-status')
+	$ipc.emit('get-status')
 	
 	$ipc.on('listening-status', function(event, listening) {
 		$store.casting = listening
-		$scope.$apply()
+	})
+	
+	$ipc.emit('get-version')
+	
+	$ipc.on('version', function(event, version) {
+		$scope.version = version
+		$rootScope.WindowTitle = 'CodeCast ' + $scope.version
 	})
 })

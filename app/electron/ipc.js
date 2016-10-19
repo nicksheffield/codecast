@@ -1,4 +1,4 @@
-const {ipcMain} = require('electron')
+const {ipcMain, app} = require('electron')
 const _ = require('lodash')
 const fs = require('fs')
 
@@ -18,6 +18,10 @@ ipcMain.on('turn-off', function(event) {
 
 ipcMain.on('get-status', function(event) {
 	event.sender.send('listening-status', memory.broadcasting)
+})
+
+ipcMain.on('get-version', function(event) {
+	event.sender.send('version', app.getVersion())
 })
 
 ipcMain.on('request-io-update', function(event) {
