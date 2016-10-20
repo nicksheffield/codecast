@@ -7,6 +7,7 @@ const rename = require('gulp-rename')
 const autoprefix = require('gulp-autoprefixer')
 const notify = require('gulp-notify')
 const plumber = require('gulp-plumber')
+const browserSync = require('browser-sync')
 
 var paths = {
 	css: {
@@ -31,11 +32,21 @@ gulp.task('css', function() {
 		.pipe(minify())
 		.pipe(rename(paths.css.name))
 		.pipe(gulp.dest(paths.output))
+		.pipe(browserSync.stream())
 			
 	return stream
 })
 
-gulp.task('watch', ['css'], function() {
+gulp.task('server', function() {
+	browserSync({
+		server: true,
+		port: 8000,
+		open: false,
+		notify: false
+	})
+})
+
+gulp.task('watch', ['server', 'css'], function() {
 	gulp.watch(paths.css.all, ['css'])
 })
 
