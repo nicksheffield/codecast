@@ -8,8 +8,10 @@ angular.module('app.controllers')
 	
 	$scope.broadcasters = $store.broadcasters
 	
-	$scope.scanProgress = 0
-	$scope.scanned = 0
+	$scope.notBroadcasting = function() {
+		console.log('notBroadcasting', _.filter($scope.broadcasters, (u) => !u.meta.broadcasting))
+		return _.filter($scope.broadcasters, (u) => !u.meta.broadcasting)
+	}
 	
 	$scope.scan = function() {
 		var evilscan = require('evilscan')

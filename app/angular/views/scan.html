@@ -11,6 +11,9 @@
 	</div>
 	
 	<div class="page-content">
+		
+		<!-- <p ng-show="notBroadcasting().length">{{ notBroadcasting().length }} users online but not broadcasting</p> -->
+	
 		<ul class="broadcasters">
 			<li ng-repeat="caster in broadcasters | filter: {meta: {broadcasting: true}} as filtered" class="broadcaster">
 				<a href="#/view/{{ caster.ip }}/{{ caster.port }}" layout="row" align="center">
