@@ -24,7 +24,7 @@ angular.module('app.controllers')
 		var options = {
 			target: address.join('.') + '.0/24',
 			port: range,
-			status: 'TO', // Timeout, Refused, Open, Unreachable
+			status: 'TROU', // Timeout, Refused, Open, Unreachable
 			banner: true,
 			concurrency: 4000
 		}
@@ -32,6 +32,7 @@ angular.module('app.controllers')
 		var scanner = new evilscan(options)
 		
 		scanner.on('result',function(data) {
+			// console.log(`${data.ip}:${port - data.port}`, data.status)
 
 			if(data.status == 'open') {
 				console.log('open', data)

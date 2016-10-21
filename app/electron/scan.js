@@ -35,7 +35,7 @@ scanner.on('done',function() {
 	if(!m) {
 		dialog.showErrorBox('No free ports', 'All available ports are already in use. You won\'t be able to broadcast.')
 	} else {
-		console.log('Listening on port', m.port)
+		console.log('Listening at', require('ip').address(), ':', m.port)
 		server.listen(m.port)
 	}
 });
