@@ -32,10 +32,8 @@ angular.module('app.controllers')
 		var scanner = new evilscan(options)
 		
 		scanner.on('result',function(data) {
-			// console.log(`${data.ip}:${port - data.port}`, data.status)
-
 			if(data.status == 'open') {
-				console.log('open', data)
+				console.log('scan result -', `${data.ip}:${port - data.port}`, data.status)
 				var found = _.find($scope.broadcasters, function(item) {
 					return data.ip == item.ip
 				})
