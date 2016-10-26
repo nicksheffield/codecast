@@ -2,7 +2,7 @@ const {ipcMain, app, dialog} = require('electron')
 const _ = require('lodash')
 const fs = require('fs')
 
-const {io, folder, memory} = require('./central')
+const {io, folder, memory, config} = require('./central')
 
 ipcMain.on('turn-on', function(event) {
 	memory.broadcasting = true
@@ -43,6 +43,10 @@ ipcMain.on('open-file-dialog', function(event) {
 
 ipcMain.on('drop-folder', function(event, path) {
 	folder.setFolder(path, event)
+})
+
+ipcMain.on('config-change', function(event) {
+	config.refresh()
 })
 
 module.exports = {

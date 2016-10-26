@@ -1,23 +1,30 @@
 var {app} = require('electron')
 var Config = require('electron-config')
-var config = new Config()
+var conf = new Config()
 
-console.log('config path:', config.path)
+console.log('config path:', conf.path)
 
-if(!config.get('username')) {
-	config.set('username', app.getPath('home').replace('/Users/', ''))
-}
+var store = conf.store
 
-var service = {
-	config: {
-		get: function(name) {
-			var config = new Config()
-			return config.get(name)
-		},
-		set: function(name, val) {
-			return config.set(name, val)
-		}
+var config = {
+	get: function(name) {
+		return store[name]
+	},
+	set: function(name, val) {
+		let config = new Config()
+		config.set(name, val)
+		store = config.store
+		
+		return val
+	},
+	refresh: function() {
+		let config = new Config()
+		store = config.store
 	}
 }
 
-module.exports = service
+if(!store.username) {
+	config.set('username', app.getPath('home').replace('/Users/', ''))
+}
+
+module.exports = { config }
