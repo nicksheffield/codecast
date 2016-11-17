@@ -2,7 +2,7 @@
 //   Electron App
 // ------------------------------------------------------------
 var electronApp = require('electron').app
-var BrowserWindow = require('electron').BrowserWindow
+var {BrowserWindow} = require('electron')
 
 var service = {
 	mainWindow: {

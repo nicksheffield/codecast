@@ -1,6 +1,6 @@
 {
 	"name": "codecast",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"author": "Nick Sheffield <numbereft@gmail.com> (http://nicksheffield.me/)",
 	"description": "Live broadcast code files across the local network",
 	"license": "MIT",
