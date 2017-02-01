@@ -75,6 +75,8 @@ angular.module('app.controllers')
 			console.log('scan - finished')
 			$scope.scanning = false
 			$scope.$apply()
+
+			$store.broadcasters = $scope.broadcasters
 		})
 		
 		scanner.run()
