@@ -1,13 +1,13 @@
 angular.module('app.controllers')
 
-.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket, $remote, $menu, $config) {
-	$scope.currentFile = {}
+.controller('ViewCtrl', function($scope, $routeParams, $http, $syntax, $timeout, $socket, $remote, $menu, $config, $store) {
 	$scope.fileContent = ''
 	$scope.syntax = ''
 	$scope.files = {}
 	$scope.changed = []
 	$scope.opened = []
-	$scope.openFiles = []
+	$scope.openFiles = $store.openFiles
+	$scope.currentFile = $store.currentFile
 	$scope.lightmode = $config.get('lightmode')
 	
 	var ip = $routeParams.ip
@@ -86,6 +86,8 @@ angular.module('app.controllers')
 				$scope.openFiles.push(file)
 			}
 		}
+
+		$store.openFiles = $scope.openFiles
 	}
 	
 	$scope.removeFromTab = function(file) {
@@ -99,6 +101,9 @@ angular.module('app.controllers')
 				$scope.syntax = ''
 			}
 		}
+
+		$store.openFiles = $scope.openFiles
+		$store.currentFile = $scope.currentFile
 	}
 	
 	function get(file) {
@@ -124,7 +129,14 @@ angular.module('app.controllers')
 					
 					$scope.syntax = $syntax(file.name)
 				}
+				
+				$store.currentFile = $scope.currentFile
 			})
+	}
+
+	if($scope.currentFile.path) {
+		console.log('$scope.currentFile', $scope.currentFile)
+		get($scope.currentFile)
 	}
 	
 	$socket.on('connected', function() {
